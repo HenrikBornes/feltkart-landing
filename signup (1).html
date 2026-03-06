@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kom i gang – FeltKart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --black: #0a0b0e;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: rgba(255,255,255,0.07);
+    --text: #eef0f5;
+    --muted: #6b7280;
+    --green: #22c55e;
+    --accent: #4ade80;
+    --red: #ef4444;
+    --blue: #3b82f6;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--black); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+
+  /* NAV */
+  nav { padding:20px 48px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:20px; display:flex; align-items:center; gap:8px; text-decoration:none; color:var(--text); }
+  .nav-dot { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green); animation:blink 2s ease infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .nav-login { font-size:13px; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  .nav-login:hover { color:var(--text); }
+
+  /* MAIN */
+  main { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 24px; }
+
+  .signup-wrap { width:100%; max-width:960px; display:grid; grid-template-columns:1fr 1fr; gap:0; background:var(--surface); border:1px solid var(--border); border-radius:20px; overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,0.5); }
+
+  /* LEFT SIDE */
+  .signup-left { padding:48px; background:linear-gradient(135deg, rgba(34,197,94,0.06), rgba(59,130,246,0.03)); border-right:1px solid var(--border); display:flex; flex-direction:column; gap:32px; }
+  .signup-left-title { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; letter-spacing:-1px; line-height:1.1; }
+  .signup-left-title em { font-style:normal; color:var(--green); }
+  .signup-left-sub { font-size:14px; color:var(--muted); line-height:1.65; }
+
+  /* PLAN SELECTOR */
+  .plan-selector { display:flex; flex-direction:column; gap:8px; }
+  .plan-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; font-family:'DM Mono',monospace; margin-bottom:4px; }
+  .plan-card { padding:14px 16px; border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:space-between; }
+  .plan-card:hover { border-color:rgba(34,197,94,0.3); background:rgba(34,197,94,0.03); }
+  .plan-card.selected { border-color:var(--green); background:rgba(34,197,94,0.06); }
+  .plan-card-left { display:flex; flex-direction:column; gap:2px; }
+  .plan-name { font-family:'Syne',sans-serif; font-weight:700; font-size:14px; }
+  .plan-desc { font-size:11px; color:var(--muted); }
+  .plan-price { font-family:'DM Mono',monospace; font-size:14px; font-weight:500; color:var(--green); }
+  .plan-check { width:18px; height:18px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; margin-left:8px; }
+  .plan-card.selected .plan-check { background:var(--green); border-color:var(--green); }
+  .plan-card.selected .plan-check::after { content:'✓'; font-size:10px; color:#000; font-weight:700; }
+
+  /* FEATURES LIST */
+  .feat-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .feat-list li { font-size:13px; color:var(--muted); display:flex; align-items:center; gap:8px; }
+  .feat-list li::before { content:'✓'; color:var(--green); font-weight:700; font-size:11px; }
+
+  /* RIGHT SIDE - FORM */
+  .signup-right { padding:48px; display:flex; flex-direction:column; }
+  .step-indicator { display:flex; align-items:center; gap:8px; margin-bottom:32px; }
+  .step-dot { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:11px; font-weight:500; transition:all 0.3s; flex-shrink:0; }
+  .step-dot.active { background:var(--green); color:#000; }
+  .step-dot.done { background:rgba(34,197,94,0.2); color:var(--green); }
+  .step-dot.inactive { background:var(--surface2); color:var(--muted); border:1px solid var(--border); }
+  .step-line { flex:1; height:1px; background:var(--border); }
+  .step-line.done { background:rgba(34,197,94,0.3); }
+  .step-title { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:6px; letter-spacing:-0.5px; }
+  .step-sub { font-size:13px; color:var(--muted); margin-bottom:24px; line-height:1.5; }
+
+  /* FORM */
+  .form-step { display:none; flex-direction:column; gap:14px; flex:1; }
+  .form-step.active { display:flex; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .field { display:flex; flex-direction:column; gap:6px; }
+  .field label { font-size:12px; color:var(--muted); font-weight:500; }
+  .field input { background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:11px 14px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.2s; }
+  .field input:focus { border-color:rgba(34,197,94,0.4); }
+  .field input::placeholder { color:var(--muted); }
+  .field input.error { border-color:var(--red); }
+
+  .btn-next { background:var(--green); color:#000; padding:14px; border-radius:10px; font-weight:700; font-size:15px; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; margin-top:auto; }
+  .btn-next:hover { background:var(--accent); transform:translateY(-1px); box-shadow:0 4px 20px rgba(34,197,94,0.3); }
+  .btn-next:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-back { background:none; border:1px solid var(--border); color:var(--muted); padding:14px; border-radius:10px; font-weight:500; font-size:14px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; margin-top:8px; }
+  .btn-back:hover { color:var(--text); border-color:rgba(255,255,255,0.15); }
+
+  .error-msg { font-size:12px; color:var(--red); margin-top:-6px; display:none; }
+  .error-msg.show { display:block; }
+  .global-error { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); color:var(--red); padding:10px 14px; border-radius:8px; font-size:13px; display:none; }
+  .global-error.show { display:block; }
+
+  /* SUCCESS */
+  .success-screen { display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; flex:1; gap:16px; padding:32px; }
+  .success-screen.show { display:flex; }
+  .success-icon { width:64px; height:64px; border-radius:50%; background:rgba(34,197,94,0.15); border:2px solid rgba(34,197,94,0.3); display:flex; align-items:center; justify-content:center; font-size:28px; animation:pop 0.4s ease both; }
+  @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.1)} 100%{transform:scale(1)} }
+  .success-title { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+  .success-sub { font-size:14px; color:var(--muted); line-height:1.6; max-width:280px; }
+  .success-btn { background:var(--green); color:#000; padding:14px 28px; border-radius:10px; font-weight:700; font-size:15px; text-decoration:none; transition:all 0.2s; display:inline-block; margin-top:8px; }
+  .success-btn:hover { background:var(--accent); transform:translateY(-1px); }
+
+  /* STRIPE REDIRECT */
+  .stripe-info { background:rgba(59,130,246,0.06); border:1px solid rgba(59,130,246,0.15); border-radius:10px; padding:14px 16px; display:flex; align-items:flex-start; gap:10px; }
+  .stripe-info-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+  .stripe-info-text { font-size:12px; color:var(--muted); line-height:1.6; }
+  .stripe-info-text strong { color:var(--text); }
+
+  /* LOADING */
+  .spinner { width:18px; height:18px; border:2px solid rgba(0,0,0,0.3); border-top-color:#000; border-radius:50%; animation:spin 0.6s linear infinite; display:inline-block; margin-right:8px; vertical-align:middle; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  @media(max-width:700px) {
+    .signup-wrap { grid-template-columns:1fr; }
+    .signup-left { display:none; }
+    nav { padding:16px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><div class="nav-dot"></div>FeltKart</a>
+  <a href="https://app.feltkart.no" class="nav-login">Har du allerede konto? Logg inn →</a>
+</nav>
+
+<main>
+  <div class="signup-wrap">
+
+    <!-- LEFT: PLAN SELECTOR -->
+    <div class="signup-left">
+      <div>
+        <div class="signup-left-title">Kom i gang med<br><em>FeltKart</em> i dag.</div>
+        <div class="signup-left-sub" style="margin-top:10px">Velg planen som passer ditt team. Ingen bindingstid – oppgrader eller avslutter når du vil.</div>
+      </div>
+
+      <div class="plan-selector">
+        <div class="plan-label">Velg plan</div>
+        <div class="plan-card" onclick="selectPlan('starter', this)">
+          <div class="plan-card-left">
+            <div class="plan-name">Starter</div>
+            <div class="plan-desc">Opptil 3 selgere</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="plan-price">990 kr/mnd</div>
+            <div class="plan-check"></div>
+          </div>
+        </div>
+        <div class="plan-card selected" onclick="selectPlan('pro', this)">
+          <div class="plan-card-left">
+            <div class="plan-name">Pro <span style="font-size:10px;background:var(--green);color:#000;padding:1px 7px;border-radius:4px;font-weight:700;margin-left:4px">POPULÆR</span></div>
+            <div class="plan-desc">Opptil 15 selgere</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="plan-price">2 490 kr/mnd</div>
+            <div class="plan-check"></div>
+          </div>
+        </div>
+        <div class="plan-card" onclick="selectPlan('enterprise', this)">
+          <div class="plan-card-left">
+            <div class="plan-name">Enterprise</div>
+            <div class="plan-desc">Ubegrenset selgere</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="plan-price">Avtale</div>
+            <div class="plan-check"></div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="feat-list">
+        <li>Kart og kundekort</li>
+        <li>Excel-import til kart</li>
+        <li>Oppfølgingslister for TM</li>
+        <li>Provisjonsberegning</li>
+        <li>Selgerportal med toppliste</li>
+        <li>Onboarding-video inkludert</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div class="signup-right">
+      <!-- Step indicator -->
+      <div class="step-indicator">
+        <div class="step-dot active" id="dot-1">1</div>
+        <div class="step-line" id="line-1"></div>
+        <div class="step-dot inactive" id="dot-2">2</div>
+        <div class="step-line" id="line-2"></div>
+        <div class="step-dot inactive" id="dot-3">💳</div>
+      </div>
+
+      <!-- STEP 1: BEDRIFT -->
+      <div class="form-step active" id="step-1">
+        <div>
+          <div class="step-title">Om bedriften</div>
+          <div class="step-sub">Fortell oss litt om organisasjonen din.</div>
+        </div>
+        <div class="field">
+          <label>Bedriftsnavn</label>
+          <input type="text" id="org-navn" placeholder="Borsan AS" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Ditt fornavn</label>
+            <input type="text" id="fornavn" placeholder="Henrik" />
+          </div>
+          <div class="field">
+            <label>Etternavn</label>
+            <input type="text" id="etternavn" placeholder="Borsan" />
+          </div>
+        </div>
+        <div class="field">
+          <label>E-postadresse</label>
+          <input type="email" id="email" placeholder="henrik@borsan.no" />
+        </div>
+        <div class="field">
+          <label>Passord</label>
+          <input type="password" id="password" placeholder="Minst 8 tegn" />
+        </div>
+        <div class="global-error" id="err-1"></div>
+        <button class="btn-next" onclick="goStep2()">Fortsett →</button>
+      </div>
+
+      <!-- STEP 2: BEKREFT -->
+      <div class="form-step" id="step-2">
+        <div>
+          <div class="step-title">Se over og bekreft</div>
+          <div class="step-sub">Sjekk at informasjonen stemmer før du går til betaling.</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;font-size:13px">
+            <span style="color:var(--muted)">Bedrift</span>
+            <span id="confirm-org" style="font-weight:500"></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px">
+            <span style="color:var(--muted)">Navn</span>
+            <span id="confirm-navn" style="font-weight:500"></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px">
+            <span style="color:var(--muted)">E-post</span>
+            <span id="confirm-email" style="font-weight:500"></span>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:12px;display:flex;justify-content:space-between;font-size:14px">
+            <span style="color:var(--muted)">Plan</span>
+            <span id="confirm-plan" style="font-weight:700;color:var(--green)"></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px">
+            <span style="color:var(--muted)">Pris</span>
+            <span id="confirm-price" style="font-family:'DM Mono',monospace;font-weight:600"></span>
+          </div>
+        </div>
+        <div class="stripe-info">
+          <div class="stripe-info-icon">🔒</div>
+          <div class="stripe-info-text"><strong>Sikker betaling via Stripe.</strong> Du blir sendt til Stripe sin betalingsside. Kort og betalingsinformasjon lagres aldri hos oss.</div>
+        </div>
+        <div class="global-error" id="err-2"></div>
+        <button class="btn-next" onclick="opprettOgBetal()" id="btn-betal">Gå til betaling →</button>
+        <button class="btn-back" onclick="goStep1()">← Endre informasjon</button>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success-screen" id="success-screen">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Konto opprettet!</div>
+        <div class="success-sub">Vi har sendt deg en velkomst-epost. Du sendes nå videre til betaling.</div>
+        <div style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace">Omdirigerer til Stripe...</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+const SUPABASE_URL = 'https://jtfuemolynkhebplvxal.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0ZnVlbW9seW5raGVicGx2eGFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3MjQxNjUsImV4cCI6MjA4ODMwMDE2NX0.iwyJXvW419RRb_YU0JlipbM347loOsFwlD8ZO2S0qGA'
+const { createClient } = supabase
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+// Stripe Payment Links – bytt ut med dine egne fra Stripe Dashboard
+const STRIPE_LINKS = {
+  starter: 'https://buy.stripe.com/STARTER_LINK',
+  pro: 'https://buy.stripe.com/PRO_LINK',
+  enterprise: 'mailto:hei@feltkart.no?subject=Enterprise-avtale'
+}
+
+const PLAN_NAMES = { starter: 'Starter', pro: 'Pro', enterprise: 'Enterprise' }
+const PLAN_PRICES = { starter: '990 kr/mnd', pro: '2 490 kr/mnd', enterprise: 'Avtale' }
+
+let selectedPlan = 'pro'
+
+function selectPlan(plan, el) {
+  selectedPlan = plan
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'))
+  el.classList.add('selected')
+}
+
+function goStep1() {
+  document.getElementById('step-2').classList.remove('active')
+  document.getElementById('step-1').classList.add('active')
+  document.getElementById('dot-1').className = 'step-dot active'
+  document.getElementById('dot-2').className = 'step-dot inactive'
+  document.getElementById('line-1').className = 'step-line'
+}
+
+function goStep2() {
+  const navn = document.getElementById('org-navn').value.trim()
+  const fornavn = document.getElementById('fornavn').value.trim()
+  const etternavn = document.getElementById('etternavn').value.trim()
+  const email = document.getElementById('email').value.trim()
+  const password = document.getElementById('password').value
+
+  const err = document.getElementById('err-1')
+  err.className = 'global-error'
+
+  if (!navn || !fornavn || !email || !password) {
+    err.textContent = 'Fyll inn alle felt'; err.className = 'global-error show'; return
+  }
+  if (password.length < 8) {
+    err.textContent = 'Passordet må være minst 8 tegn'; err.className = 'global-error show'; return
+  }
+  if (!email.includes('@')) {
+    err.textContent = 'Ugyldig e-postadresse'; err.className = 'global-error show'; return
+  }
+
+  document.getElementById('confirm-org').textContent = navn
+  document.getElementById('confirm-navn').textContent = `${fornavn} ${etternavn}`
+  document.getElementById('confirm-email').textContent = email
+  document.getElementById('confirm-plan').textContent = PLAN_NAMES[selectedPlan]
+  document.getElementById('confirm-price').textContent = PLAN_PRICES[selectedPlan]
+
+  document.getElementById('step-1').classList.remove('active')
+  document.getElementById('step-2').classList.add('active')
+  document.getElementById('dot-1').className = 'step-dot done'
+  document.getElementById('dot-1').textContent = '✓'
+  document.getElementById('dot-2').className = 'step-dot active'
+  document.getElementById('line-1').className = 'step-line done'
+}
+
+async function opprettOgBetal() {
+  const btn = document.getElementById('btn-betal')
+  const err = document.getElementById('err-2')
+  err.className = 'global-error'
+
+  btn.disabled = true
+  btn.innerHTML = '<span class="spinner"></span>Oppretter konto...'
+
+  const orgNavn = document.getElementById('org-navn').value.trim()
+  const fornavn = document.getElementById('fornavn').value.trim()
+  const etternavn = document.getElementById('etternavn').value.trim()
+  const email = document.getElementById('email').value.trim()
+  const password = document.getElementById('password').value
+  const slug = orgNavn.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-')
+
+  try {
+    // 1. Opprett bruker i Supabase Auth
+    const { data: authData, error: authErr } = await sb.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: `${fornavn} ${etternavn}` },
+        emailRedirectTo: 'https://app.feltkart.no'
+      }
+    })
+    if (authErr) throw new Error(authErr.message)
+
+    // 2. Opprett organisasjon
+    const { data: orgData, error: orgErr } = await sb.from('organizations').insert({
+      navn: orgNavn,
+      slug: slug + '-' + Math.random().toString(36).substr(2, 4),
+      kontakt_email: email,
+      plan: selectedPlan
+    }).select().single()
+    if (orgErr) throw new Error('Kunne ikke opprette organisasjon')
+
+    // 3. Koble bruker til org (via profiles – trigges av auth)
+    await sb.from('profiles').upsert({
+      id: authData.user.id,
+      email,
+      full_name: `${fornavn} ${etternavn}`,
+      role: 'admin',
+      org_id: orgData.id
+    })
+
+    // 4. Vis suksess og redirect til Stripe
+    document.getElementById('step-2').classList.remove('active')
+    document.getElementById('success-screen').className = 'success-screen show'
+    document.getElementById('dot-2').className = 'step-dot done'
+    document.getElementById('dot-2').textContent = '✓'
+    document.getElementById('dot-3').className = 'step-dot active'
+    document.getElementById('line-2').className = 'step-line done'
+
+    // Enterprise → send epost, ellers Stripe
+    setTimeout(() => {
+      const link = STRIPE_LINKS[selectedPlan]
+      const emailParam = encodeURIComponent(email)
+      const orgParam = encodeURIComponent(orgNavn)
+      if (selectedPlan === 'enterprise') {
+        window.location.href = link
+      } else {
+        window.location.href = `${link}?prefilled_email=${emailParam}&client_reference_id=${orgData.id}`
+      }
+    }, 2000)
+
+  } catch (e) {
+    err.textContent = e.message || 'Noe gikk galt. Prøv igjen.'
+    err.className = 'global-error show'
+    btn.disabled = false
+    btn.innerHTML = 'Gå til betaling →'
+  }
+}
+</script>
+</body>
+</html>

@@ -291,7 +291,7 @@ async function opprettOgBetal() {
     document.getElementById('line-2').className = 'step-line done'
 
     // 3. Hent Stripe Checkout URL
-    const checkoutRes = await fetch('/api/create-checkout', {
+    const checkoutRes = await fetch('https://app.feltkart.no/api/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, orgNavn, orgId: authData.user?.id, antallSelgere })

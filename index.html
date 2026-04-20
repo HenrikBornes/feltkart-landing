@@ -3,447 +3,366 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FeltKart – Feltsalg gjort enkelt</title>
+<title>FeltKart – Salgsteamet ditt på kartet</title>
+<meta name="description" content="FeltKart gir dør-til-dør-salgsteam et komplett verktøy: kart, kundekort, oppfølging, provisjon og statistikk i én app. Norsk SaaS.">
+<meta property="og:title" content="FeltKart – Salgsteamet ditt på kartet">
+<meta property="og:description" content="Komplett verktøy for feltsalg. Kart, kundekort, provisjon og statistikk.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://feltkart.no">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --black: #0a0b0e;
-    --surface: #111318;
-    --surface2: #181c24;
-    --border: rgba(255,255,255,0.07);
-    --text: #eef0f5;
-    --muted: #6b7280;
-    --green: #22c55e;
-    --accent: #4ade80;
-    --blue: #3b82f6;
-    --yellow: #f59e0b;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--black); color:var(--text); font-family:'DM Sans',sans-serif; overflow-x:hidden; }
-  body::before {
-    content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.35;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  }
+:root {
+  --navy-deep: #040e1a;
+  --navy: #07223c;
+  --navy-light: #0c2d4a;
+  --navy-lighter: #103858;
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #4b6a88;
+  --accent: #10b981;
+  --accent-glow: rgba(16,185,129,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--navy-deep); color:var(--text); font-family:'Inter',system-ui,sans-serif; overflow-x:hidden; line-height:1.6; }
 
-  /* NAV */
-  nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:20px 48px; display:flex; align-items:center; justify-content:space-between; background:rgba(10,11,14,0.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
-  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:-0.5px; display:flex; align-items:center; gap:8px; }
-  .nav-dot { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 12px var(--green); animation:blink 2s ease infinite; }
-  @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
-  .nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
-  .nav-links a { color:var(--muted); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
-  .nav-links a:hover { color:var(--text); }
-  .nav-cta { background:var(--green)!important; color:#000!important; padding:10px 22px; border-radius:8px; font-weight:600!important; transition:all 0.2s!important; }
-  .nav-cta:hover { background:var(--accent)!important; transform:translateY(-1px); box-shadow:0 4px 20px rgba(34,197,94,0.3); }
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:16px 48px; display:flex; align-items:center; justify-content:space-between; background:rgba(4,14,26,0.9); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-logo { font-weight:800; font-size:20px; letter-spacing:-0.5px; display:flex; align-items:center; gap:8px; }
+.nav-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); }
+.nav-links { display:flex; align-items:center; gap:28px; list-style:none; }
+.nav-links a { color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-cta { background:var(--accent)!important; color:#fff!important; padding:10px 20px; border-radius:8px; font-weight:600!important; }
+.nav-cta:hover { opacity:0.9; }
 
-  /* HERO */
-  .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:140px 48px 80px; position:relative; overflow:hidden; }
-  .hero-glow { position:absolute; top:15%; left:50%; transform:translateX(-50%); width:700px; height:500px; background:radial-gradient(ellipse, rgba(34,197,94,0.1) 0%, transparent 70%); pointer-events:none; }
-  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:100px; padding:6px 18px; font-size:12px; font-weight:500; color:var(--green); margin-bottom:36px; font-family:'DM Mono',monospace; letter-spacing:0.5px; animation:fadeUp 0.6s ease both; }
-  .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(52px,9vw,104px); font-weight:800; line-height:0.93; letter-spacing:-3px; margin-bottom:32px; animation:fadeUp 0.6s ease 0.1s both; }
-  .hero h1 em { font-style:normal; color:var(--green); position:relative; }
-  .hero h1 em::after { content:''; position:absolute; bottom:6px; left:0; right:0; height:3px; background:var(--green); opacity:0.35; border-radius:2px; }
-  .hero-sub { font-size:20px; color:var(--muted); max-width:580px; line-height:1.65; font-weight:300; margin-bottom:52px; animation:fadeUp 0.6s ease 0.2s both; }
-  .hero-actions { display:flex; gap:12px; align-items:center; animation:fadeUp 0.6s ease 0.3s both; flex-wrap:wrap; justify-content:center; }
-  .btn-primary { background:var(--green); color:#000; padding:16px 32px; border-radius:10px; font-weight:600; font-size:16px; text-decoration:none; transition:all 0.2s; display:inline-block; }
-  .btn-primary:hover { background:var(--accent); transform:translateY(-2px); box-shadow:0 8px 32px rgba(34,197,94,0.3); }
-  .btn-ghost { color:var(--muted); padding:16px 32px; border-radius:10px; font-weight:500; font-size:16px; text-decoration:none; border:1px solid var(--border); transition:all 0.2s; }
-  .btn-ghost:hover { color:var(--text); border-color:rgba(255,255,255,0.15); }
+/* HERO */
+.hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:140px 24px 80px; position:relative; }
+.hero-glow { position:absolute; top:10%; left:50%; transform:translateX(-50%); width:800px; height:600px; background:radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%); pointer-events:none; }
+.hero h1 { font-size:clamp(40px,7vw,80px); font-weight:800; line-height:1.0; letter-spacing:-2px; margin-bottom:24px; }
+.hero h1 span { color:var(--accent); }
+.hero-sub { font-size:18px; color:var(--text-secondary); max-width:560px; margin:0 auto 40px; font-weight:400; }
+.hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn { padding:14px 28px; border-radius:10px; font-weight:600; font-size:15px; text-decoration:none; display:inline-block; transition:all 0.2s; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { opacity:0.9; transform:translateY(-1px); box-shadow:0 8px 24px rgba(16,185,129,0.25); }
+.btn-outline { border:1px solid var(--border-strong); color:var(--text-secondary); }
+.btn-outline:hover { color:var(--text); border-color:rgba(255,255,255,0.3); }
 
-  /* STATS */
-  .stats-bar { display:flex; align-items:center; justify-content:center; gap:64px; padding:40px 48px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface); flex-wrap:wrap; }
-  .stat-item { text-align:center; }
-  .stat-value { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--green); letter-spacing:-1px; }
-  .stat-label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+/* SCREENSHOT */
+.screenshot-wrap { max-width:1100px; margin:0 auto; padding:0 24px 80px; }
+.screenshot { width:100%; border-radius:16px; border:1px solid var(--border-strong); box-shadow:0 40px 100px rgba(0,0,0,0.5); }
 
-  /* MOCK */
-  .mock-wrapper { padding:80px 48px; display:flex; justify-content:center; }
-  .mock-screen { width:100%; max-width:980px; background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 40px 120px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04); }
-  .mock-topbar { background:#0d1117; padding:14px 20px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); }
-  .mock-dots { display:flex; gap:6px; }
-  .mock-dot { width:10px; height:10px; border-radius:50%; }
-  .mock-dot.r{background:#ff5f57} .mock-dot.y{background:#febc2e} .mock-dot.g{background:#28c840}
-  .mock-url { flex:1; background:rgba(255,255,255,0.04); border-radius:6px; padding:5px 12px; font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); text-align:center; }
-  .mock-nav { background:#0d1117; padding:0 20px; display:flex; align-items:center; gap:4px; border-bottom:1px solid var(--border); height:48px; }
-  .mock-nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:16px; margin-right:16px; }
-  .mock-nav-btn { padding:6px 12px; border-radius:6px; font-size:12px; color:var(--muted); }
-  .mock-nav-btn.on { background:rgba(34,197,94,0.1); color:var(--green); font-weight:600; }
-  .mock-map { height:340px; background:#1a2035; position:relative; overflow:hidden; }
-  .mock-map::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px); background-size:48px 48px; }
-  .road { position:absolute; background:rgba(255,255,255,0.055); border-radius:2px; }
-  .fpin { position:absolute; width:13px; height:13px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid rgba(0,0,0,0.35); animation:ppop 0.4s ease both; }
-  @keyframes ppop { 0%{transform:rotate(-45deg)scale(0)} 70%{transform:rotate(-45deg)scale(1.2)} 100%{transform:rotate(-45deg)scale(1)} }
-  .fpin.b{background:#3b82f6;animation-delay:.1s} .fpin.gn{background:#22c55e;animation-delay:.2s} .fpin.y{background:#f59e0b;animation-delay:.3s} .fpin.rd{background:#ef4444;animation-delay:.15s} .fpin.gr{background:#6b7280;animation-delay:.25s}
-  .mock-popup { position:absolute; top:32px; right:32px; width:220px; background:#13161e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:14px; box-shadow:0 8px 32px rgba(0,0,0,0.5); font-size:12px; }
-  .pp-addr { font-weight:600; font-size:13px; margin-bottom:2px; }
-  .pp-sub { color:var(--muted); font-size:11px; margin-bottom:10px; }
-  .pp-btns { display:flex; flex-wrap:wrap; gap:4px; }
-  .pp-btn { padding:3px 8px; border-radius:5px; font-size:10px; font-weight:600; }
+/* STATS */
+.stats { display:flex; justify-content:center; gap:48px; padding:48px 24px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--navy); flex-wrap:wrap; }
+.stat { text-align:center; }
+.stat-val { font-size:32px; font-weight:800; letter-spacing:-1px; }
+.stat-label { font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
 
-  /* SECTIONS */
-  .section { padding:96px 48px; max-width:1200px; margin:0 auto; }
-  .sec-label { font-family:'DM Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--green); margin-bottom:16px; }
-  .sec-title { font-family:'Syne',sans-serif; font-size:clamp(32px,4vw,56px); font-weight:800; letter-spacing:-2px; line-height:1.05; margin-bottom:16px; }
-  .sec-sub { font-size:18px; color:var(--muted); max-width:560px; line-height:1.6; font-weight:300; margin-bottom:64px; }
+/* SECTIONS */
+.section { max-width:1100px; margin:0 auto; padding:96px 24px; }
+.section-label { font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--accent); font-weight:600; margin-bottom:12px; }
+.section-title { font-size:clamp(28px,4vw,48px); font-weight:800; letter-spacing:-1.5px; line-height:1.1; margin-bottom:16px; }
+.section-sub { font-size:16px; color:var(--text-secondary); max-width:520px; margin-bottom:56px; }
 
-  /* FEATURES GRID */
-  .feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); border-radius:16px; overflow:hidden; }
-  .feat-card { background:var(--surface); padding:36px 32px; transition:background 0.2s; position:relative; overflow:hidden; }
-  .feat-card:hover { background:var(--surface2); }
-  .feat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--green),transparent); opacity:0; transition:opacity 0.2s; }
-  .feat-card:hover::before { opacity:1; }
-  .feat-icon { font-size:28px; margin-bottom:16px; display:block; }
-  .feat-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; margin-bottom:10px; letter-spacing:-0.5px; }
-  .feat-desc { font-size:14px; color:var(--muted); line-height:1.65; }
-  .feat-tag { display:inline-block; background:rgba(34,197,94,0.1); color:var(--green); font-size:10px; font-weight:600; padding:2px 8px; border-radius:4px; margin-top:10px; font-family:'DM Mono',monospace; }
+/* FEATURES */
+.feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.feat-card { background:var(--navy); border:1px solid var(--border); border-radius:14px; padding:32px 28px; transition:border-color 0.2s; }
+.feat-card:hover { border-color:var(--border-strong); }
+.feat-icon { font-size:24px; margin-bottom:16px; }
+.feat-title { font-size:16px; font-weight:700; margin-bottom:8px; }
+.feat-desc { font-size:14px; color:var(--text-secondary); line-height:1.65; }
 
-  /* STEPS */
-  .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; counter-reset:step; }
-  .step { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px; counter-increment:step; }
-  .step::before { content:counter(step,decimal-leading-zero); display:block; font-family:'DM Mono',monospace; font-size:11px; color:var(--green); margin-bottom:16px; letter-spacing:1px; }
-  .step-title { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; margin-bottom:8px; }
-  .step-desc { font-size:13px; color:var(--muted); line-height:1.6; }
+/* HOW IT WORKS */
+.steps { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; counter-reset:step; }
+.step { background:var(--navy); border:1px solid var(--border); border-radius:12px; padding:28px 24px; counter-increment:step; }
+.step::before { content:counter(step); display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--accent); color:#fff; font-size:13px; font-weight:700; margin-bottom:16px; }
+.step-title { font-size:15px; font-weight:700; margin-bottom:6px; }
+.step-desc { font-size:13px; color:var(--text-secondary); line-height:1.6; }
 
-  /* CUSTOMISE SECTION */
-  .custom-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
-  .custom-list { list-style:none; display:flex; flex-direction:column; gap:16px; }
-  .custom-list li { display:flex; align-items:flex-start; gap:14px; }
-  .custom-list li .ci { width:36px; height:36px; border-radius:8px; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
-  .custom-list li .ct { font-size:14px; color:var(--muted); line-height:1.6; }
-  .custom-list li .ct strong { color:var(--text); display:block; margin-bottom:2px; font-size:15px; }
-  .custom-visual { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:32px; }
-  .cv-header { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; margin-bottom:20px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; font-size:11px; font-family:'DM Mono',monospace; }
-  .cv-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
-  .cv-item:last-child { border:none; }
-  .cv-rank { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:var(--surface2); width:32px; }
-  .cv-rank.top { color:var(--green); }
-  .cv-name { flex:1; font-weight:500; font-size:14px; }
-  .cv-bar-wrap { width:120px; background:var(--surface2); border-radius:4px; height:6px; overflow:hidden; }
-  .cv-bar { height:100%; border-radius:4px; background:var(--green); }
-  .cv-val { font-family:'DM Mono',monospace; font-size:12px; color:var(--green); width:48px; text-align:right; }
+/* FOR WHO */
+.audience-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.audience-card { background:var(--navy); border:1px solid var(--border); border-radius:14px; padding:32px; }
+.audience-card h3 { font-size:18px; font-weight:700; margin-bottom:8px; }
+.audience-card p { font-size:14px; color:var(--text-secondary); line-height:1.65; }
+.audience-card ul { list-style:none; margin-top:16px; }
+.audience-card ul li { font-size:13px; color:var(--text-secondary); padding:6px 0; border-bottom:1px solid var(--border); display:flex; gap:8px; align-items:center; }
+.audience-card ul li::before { content:'→'; color:var(--accent); font-weight:700; }
 
-  /* PRICING */
-  .price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
-  .price-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:36px 32px; position:relative; transition:transform 0.2s,box-shadow 0.2s; }
-  .price-card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,0.4); }
-  .price-card.featured { border-color:rgba(34,197,94,0.3); background:rgba(34,197,94,0.03); }
-  .price-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--green); color:#000; font-size:10px; font-weight:700; padding:4px 14px; border-radius:100px; white-space:nowrap; font-family:'DM Mono',monospace; letter-spacing:0.5px; }
-  .price-name { font-family:'Syne',sans-serif; font-size:20px; font-weight:700; margin-bottom:8px; }
-  .price-amt { font-family:'Syne',sans-serif; font-size:48px; font-weight:800; letter-spacing:-2px; line-height:1; margin-bottom:4px; }
-  .price-amt span { font-size:16px; font-weight:400; color:var(--muted); letter-spacing:0; }
-  .price-desc { font-size:13px; color:var(--muted); margin-bottom:28px; line-height:1.5; }
-  .price-feats { list-style:none; margin-bottom:32px; }
-  .price-feats li { font-size:13px; padding:7px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; color:var(--muted); }
-  .price-feats li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
-  .price-cta { display:block; text-align:center; padding:14px; border-radius:8px; font-weight:600; font-size:14px; text-decoration:none; transition:all 0.2s; }
-  .price-cta.primary { background:var(--green); color:#000; }
-  .price-cta.primary:hover { background:var(--accent); box-shadow:0 4px 20px rgba(34,197,94,0.3); }
-  .price-cta.ghost { border:1px solid var(--border); color:var(--muted); }
-  .price-cta.ghost:hover { color:var(--text); border-color:rgba(255,255,255,0.15); }
+/* PRICING */
+.price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.price-card { background:var(--navy); border:1px solid var(--border); border-radius:16px; padding:36px 28px; position:relative; }
+.price-card.featured { border-color:var(--accent); }
+.price-badge { position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:10px; font-weight:700; padding:4px 14px; border-radius:100px; }
+.price-name { font-size:18px; font-weight:700; margin-bottom:4px; }
+.price-amt { font-size:40px; font-weight:800; letter-spacing:-2px; margin-bottom:4px; }
+.price-amt span { font-size:14px; font-weight:400; color:var(--text-muted); }
+.price-desc { font-size:13px; color:var(--text-secondary); margin-bottom:24px; }
+.price-feats { list-style:none; margin-bottom:28px; }
+.price-feats li { font-size:13px; padding:6px 0; border-bottom:1px solid var(--border); color:var(--text-secondary); display:flex; gap:8px; }
+.price-feats li::before { content:'✓'; color:var(--accent); font-weight:700; }
+.price-cta { display:block; text-align:center; padding:12px; border-radius:8px; font-weight:600; font-size:14px; text-decoration:none; }
+.price-cta.primary { background:var(--accent); color:#fff; }
+.price-cta.ghost { border:1px solid var(--border); color:var(--text-secondary); }
 
-  /* CTA BANNER */
-  .cta-banner { margin:0 48px 80px; background:linear-gradient(135deg,rgba(34,197,94,0.07),rgba(59,130,246,0.04)); border:1px solid rgba(34,197,94,0.15); border-radius:24px; padding:80px 64px; text-align:center; position:relative; overflow:hidden; }
-  .cta-banner::before { content:''; position:absolute; top:-40%; left:50%; transform:translateX(-50%); width:500px; height:500px; background:radial-gradient(circle,rgba(34,197,94,0.09),transparent 70%); pointer-events:none; }
-  .cta-banner h2 { font-family:'Syne',sans-serif; font-size:clamp(32px,4vw,56px); font-weight:800; letter-spacing:-2px; margin-bottom:16px; }
-  .cta-banner p { font-size:18px; color:var(--muted); margin-bottom:40px; font-weight:300; }
+/* CTA */
+.cta-section { margin:0 24px 80px; background:var(--navy); border:1px solid var(--border); border-radius:20px; padding:80px 48px; text-align:center; }
+.cta-section h2 { font-size:clamp(28px,4vw,44px); font-weight:800; letter-spacing:-1px; margin-bottom:16px; }
+.cta-section p { color:var(--text-secondary); margin-bottom:32px; font-size:16px; }
 
-  /* FOOTER */
-  footer { padding:40px 48px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:13px; }
-  .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:16px; color:var(--text); display:flex; align-items:center; gap:6px; }
+/* FOOTER */
+footer { padding:32px 48px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; color:var(--text-muted); font-size:13px; flex-wrap:wrap; gap:16px; }
+.footer-logo { font-weight:800; font-size:16px; color:var(--text); display:flex; align-items:center; gap:6px; }
 
-  /* ANIM */
-  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
-  .reveal { opacity:0; transform:translateY(32px); transition:opacity 0.6s ease,transform 0.6s ease; }
-  .reveal.visible { opacity:1; transform:none; }
+/* RESPONSIVE */
+@media(max-width:900px) {
+  nav { padding:14px 20px; } .nav-links { display:none; }
+  .feat-grid, .steps { grid-template-columns:1fr; }
+  .price-grid { grid-template-columns:1fr; }
+  .audience-grid { grid-template-columns:1fr; }
+  .stats { gap:24px; }
+  .cta-section { margin:0 16px 60px; padding:48px 24px; }
+  footer { flex-direction:column; text-align:center; }
+}
 
-  @media(max-width:900px){
-    nav{padding:16px 24px} .nav-links{display:none}
-    .hero{padding:100px 24px 60px} .feat-grid{grid-template-columns:1fr} .steps{grid-template-columns:1fr 1fr}
-    .price-grid{grid-template-columns:1fr} .stats-bar{gap:24px} .section{padding:64px 24px}
-    .cta-banner{margin:0 24px 60px;padding:48px 28px} footer{flex-direction:column;gap:16px;text-align:center}
-    .custom-grid{grid-template-columns:1fr}
-  }
+/* ANIMATIONS */
+.reveal { opacity:0; transform:translateY(24px); transition:all 0.6s ease; }
+.reveal.visible { opacity:1; transform:none; }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo"><div class="nav-dot"></div>FeltKart</div>
+  <div class="nav-logo"><div class="nav-dot"></div> FeltKart</div>
   <ul class="nav-links">
     <li><a href="#features">Funksjoner</a></li>
-    <li><a href="#customize">Tilpass</a></li>
     <li><a href="#how">Slik fungerer det</a></li>
-    <li><a href="/signup.html">Priser</a></li>
-    <li><a href="https://app.feltkart.no" class="nav-cta">Logg inn →</a></li>
+    <li><a href="#pricing">Priser</a></li>
+    <li><a href="https://app.feltkart.no" class="nav-cta">Logg inn</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-badge">🗺 Feltsalg · Norge</div>
-  <h1>Selg mer.<br><em>Mist ingenting.</em></h1>
-  <p class="hero-sub">FeltKart gir salgsteamet ditt et komplett verktøy for feltsalg – kart, kundekort, oppfølging og provisjonsoversikt i én app.</p>
+  <h1>Salgsteamet ditt<br><span>på kartet.</span></h1>
+  <p class="hero-sub">FeltKart er verktøyet for salgsteam som jobber på dør. Kart, kundekort, oppfølging og provisjon – alt i én app bygget for norske selgere.</p>
   <div class="hero-actions">
-    <a href="/signup.html" class="btn-primary">Kom i gang →</a>
-    <a href="#features" class="btn-ghost">Se funksjoner</a>
+    <a href="/signup.html" class="btn btn-primary">Start gratis prøveperiode</a>
+    <a href="#features" class="btn btn-outline">Se funksjoner</a>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat-item"><div class="stat-value">500+</div><div class="stat-label">Adresser per liste</div></div>
-  <div class="stat-item"><div class="stat-value">&lt; 2 min</div><div class="stat-label">Opplasting til kart</div></div>
-  <div class="stat-item"><div class="stat-value">Real-time</div><div class="stat-label">Synkronisering</div></div>
-  <div class="stat-item"><div class="stat-value">100%</div><div class="stat-label">Norsk løsning</div></div>
-</div>
-
-<!-- MOCK -->
-<div class="mock-wrapper reveal">
-  <div class="mock-screen">
-    <div class="mock-topbar">
-      <div class="mock-dots"><div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div></div>
-      <div class="mock-url">feltkart.no</div>
-    </div>
-    <div class="mock-nav">
-      <div class="mock-nav-logo">FeltKart</div>
-      <div class="mock-nav-btn on">🗺 Kart</div>
-      <div class="mock-nav-btn">📊 Oversikt</div>
-      <div class="mock-nav-btn">💰 Økonomi</div>
-      <div class="mock-nav-btn">📞 Ringeliste</div>
-    </div>
-    <div class="mock-map">
-      <div class="road" style="width:80%;height:6px;top:44%;left:10%"></div>
-      <div class="road" style="width:5px;height:70%;top:10%;left:33%"></div>
-      <div class="road" style="width:5px;height:65%;top:15%;left:60%"></div>
-      <div class="road" style="width:50%;height:4px;top:66%;left:28%;transform:rotate(-7deg)"></div>
-      <div class="fpin b" style="top:37%;left:27%"></div>
-      <div class="fpin gn" style="top:28%;left:41%"></div>
-      <div class="fpin gn" style="top:54%;left:53%"></div>
-      <div class="fpin y" style="top:41%;left:64%"></div>
-      <div class="fpin rd" style="top:24%;left:19%"></div>
-      <div class="fpin gr" style="top:60%;left:37%"></div>
-      <div class="fpin b" style="top:47%;left:72%"></div>
-      <div class="fpin gn" style="top:33%;left:79%"></div>
-      <div class="fpin b" style="top:70%;left:24%"></div>
-      <div class="fpin y" style="top:21%;left:54%"></div>
-      <div class="mock-popup">
-        <div class="pp-addr">Munkebotn 5</div>
-        <div class="pp-sub">5036 Bergen · ILP</div>
-        <div class="pp-btns">
-          <span class="pp-btn" style="background:rgba(59,130,246,0.15);color:#60a5fa">Ikke besøkt</span>
-          <span class="pp-btn" style="background:rgba(245,158,11,0.15);color:#f59e0b">Tenker</span>
-          <span class="pp-btn" style="background:rgba(34,197,94,0.2);color:#22c55e">SALG ✓</span>
-          <span class="pp-btn" style="background:rgba(107,114,128,0.15);color:#9ca3af">Ikke hjemme</span>
-          <span class="pp-btn" style="background:rgba(239,68,68,0.15);color:#ef4444">NEI</span>
-        </div>
-      </div>
+<!-- APP SCREENSHOT -->
+<div class="screenshot-wrap reveal">
+  <img src="https://app.feltkart.no/og-image.png" alt="FeltKart app – kartvisning" class="screenshot" onerror="this.style.display='none'">
+  <!-- Fallback mockup if no image -->
+  <div class="screenshot" style="aspect-ratio:16/9;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-muted);">
+    <div style="text-align:center">
+      <div style="font-size:48px;margin-bottom:12px">🗺</div>
+      <p>app.feltkart.no</p>
+      <p style="font-size:12px;margin-top:4px">Interaktivt kart med alle adresser, statuser og selgerposisjoner</p>
     </div>
   </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-val">100 000+</div><div class="stat-label">Adresser per tenant</div></div>
+  <div class="stat"><div class="stat-val">&lt; 2 min</div><div class="stat-label">Fra Excel til kart</div></div>
+  <div class="stat"><div class="stat-val">Sanntid</div><div class="stat-label">Synkronisering</div></div>
+  <div class="stat"><div class="stat-val">100%</div><div class="stat-label">Norsk løsning</div></div>
 </div>
 
 <!-- FEATURES -->
 <section class="section" id="features">
-  <div class="sec-label">Funksjoner</div>
-  <h2 class="sec-title reveal">Alt du trenger.<br>Ingenting du ikke trenger.</h2>
-  <p class="sec-sub reveal">Bygget spesifikt for norske salgsteam som jobber på dør.</p>
+  <div class="section-label">Funksjoner</div>
+  <h2 class="section-title reveal">Alt salgsteamet trenger.<br>Ingenting overflødig.</h2>
+  <p class="section-sub reveal">Bygget fra bunnen av for norske dør-til-dør-team.</p>
   <div class="feat-grid reveal">
     <div class="feat-card">
-      <span class="feat-icon">🗺</span>
+      <div class="feat-icon">🗺</div>
       <div class="feat-title">Interaktivt kart</div>
-      <div class="feat-desc">Last opp en Excel-liste og få alle adresser plottet på kartet på under to minutter. Tegn soner og tildel selgere med ett klikk.</div>
+      <div class="feat-desc">Last opp adresselister fra Excel. Alle adresser plottes automatisk via Kartverket. Tegn soner, tildel selgere, filtrer på status.</div>
     </div>
     <div class="feat-card">
-      <span class="feat-icon">📋</span>
+      <div class="feat-icon">📋</div>
       <div class="feat-title">Kundekort</div>
-      <div class="feat-desc">Full kundeinformasjon på hvert besøk – kommentar, NEI-årsak, produkt og historikk fra tidligere kundeforhold.</div>
+      <div class="feat-desc">Kontaktinfo, besøkshistorikk, kommentarer og status – alt samlet. Selger registrerer besøk rett fra mobilen.</div>
     </div>
     <div class="feat-card">
-      <span class="feat-icon">📞</span>
-      <div class="feat-title">Oppfølging på TM</div>
-      <div class="feat-desc">Dra ut lister for oppfølging på telefon – automatisk samlet fra alle "Ikke hjemme" og "Tenker" i felten. Klar for opplasting til ringesystem.</div>
+      <div class="feat-icon">📅</div>
+      <div class="feat-title">Oppfølging</div>
+      <div class="feat-desc">Avtaler og callbacks i ukesvisning. Push-varsler minner selgeren på avtalte kundebesøk. Ingen glipper mellom fingrene.</div>
     </div>
     <div class="feat-card">
-      <span class="feat-icon">💰</span>
-      <div class="feat-title">Provisjonsoversikt</div>
-      <div class="feat-desc">Automatisk provisjonsberegning per selger basert på produkt og volum. Alltid oppdatert – ingen manuell regning.</div>
+      <div class="feat-icon">💰</div>
+      <div class="feat-title">Provisjon</div>
+      <div class="feat-desc">Provisjonsberegning per produkt med tiers. Admin ser lønnsomhet etter AGA og feriepenger. Selger ser sin egen inntjening.</div>
     </div>
     <div class="feat-card">
-      <span class="feat-icon">📊</span>
-      <div class="feat-title">Følg opp selgere</div>
-      <div class="feat-desc">Se hvem som besøker, hvem som konverterer og hvem som trenger hjelp. Admin har full oversikt over fortjeneste og aktivitet.</div>
+      <div class="feat-icon">📊</div>
+      <div class="feat-title">Statistikk og toppliste</div>
+      <div class="feat-desc">Treffprosent, konvertering, dører per dag – og toppliste som motiverer teamet. Coaching-innsikt for ledere.</div>
     </div>
     <div class="feat-card">
-      <span class="feat-icon">🎯</span>
+      <div class="feat-icon">📍</div>
+      <div class="feat-title">GPS-verifisering</div>
+      <div class="feat-desc">Se om besøket ble registrert på adressen, i nærheten eller fra annen lokasjon. Vis selgere i sanntid på admin-kartet.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🎯</div>
       <div class="feat-title">Salgsmål per liste</div>
-      <div class="feat-desc">Sett budsjett og mål per liste og selger. Følg framgangen i sanntid med visuelle indikatorer.</div>
-      <span class="feat-tag">NYTT</span>
+      <div class="feat-desc">Sett budsjett i antall eller prosent. Følg progresjon mot målet visuelt – per selger, per liste, per oppdragsgiver.</div>
     </div>
-  </div>
-</section>
-
-<!-- CUSTOMISE -->
-<section class="section" id="customize" style="padding-top:0">
-  <div class="sec-label">Tilpasning</div>
-  <h2 class="sec-title reveal">Sett opp som<br>din egen løsning.</h2>
-  <p class="sec-sub reveal">FeltKart tilpasses fullt ut til din bedrift – logo, leverandører, provisjoner og selgerportal.</p>
-  <div class="custom-grid reveal">
-    <ul class="custom-list">
-      <li>
-        <div class="ci">🏷</div>
-        <div class="ct"><strong>Eget brand</strong>Last opp logo og sett egne farger. Din bedrift, ditt utseende.</div>
-      </li>
-      <li>
-        <div class="ci">⚡</div>
-        <div class="ct"><strong>Egne leverandører og produkter</strong>Legg inn de leverandørene du jobber med og definer produkter og priser selv.</div>
-      </li>
-      <li>
-        <div class="ci">💸</div>
-        <div class="ct"><strong>Egendefinert provisjon</strong>Sett opp provisjonsstruktur, tiers og trekk akkurat slik din bedrift ønsker det.</div>
-      </li>
-      <li>
-        <div class="ci">🏆</div>
-        <div class="ct"><strong>Selgerportal med toppliste</strong>Hver selger logger inn og ser sin egen statistikk, toppliste og budsjett.</div>
-      </li>
-      <li>
-        <div class="ci">🎬</div>
-        <div class="ct"><strong>Onboarding-film</strong>Ny bruker? En kort videogjennomgang viser selgeren alt de trenger å vite fra dag én.</div>
-      </li>
-    </ul>
-    <div class="custom-visual">
-      <div class="cv-header">Toppliste – denne uken</div>
-      <div class="cv-item">
-        <div class="cv-rank top">1</div>
-        <div class="cv-name">Sebastian B.</div>
-        <div class="cv-bar-wrap"><div class="cv-bar" style="width:100%"></div></div>
-        <div class="cv-val">14 salg</div>
-      </div>
-      <div class="cv-item">
-        <div class="cv-rank top">2</div>
-        <div class="cv-name">Henrik A.</div>
-        <div class="cv-bar-wrap"><div class="cv-bar" style="width:78%"></div></div>
-        <div class="cv-val">11 salg</div>
-      </div>
-      <div class="cv-item">
-        <div class="cv-rank">3</div>
-        <div class="cv-name">Erik M.</div>
-        <div class="cv-bar-wrap"><div class="cv-bar" style="width:57%;background:var(--yellow)"></div></div>
-        <div class="cv-val" style="color:var(--yellow)">8 salg</div>
-      </div>
-      <div class="cv-item">
-        <div class="cv-rank">4</div>
-        <div class="cv-name">Anna K.</div>
-        <div class="cv-bar-wrap"><div class="cv-bar" style="width:36%;background:var(--muted)"></div></div>
-        <div class="cv-val" style="color:var(--muted)">5 salg</div>
-      </div>
-      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
-        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px">DITT BUDSJETT</div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
-          <span style="color:var(--muted)">Mål denne måneden</span>
-          <span style="font-family:'DM Mono',monospace">20 salg</span>
-        </div>
-        <div style="background:var(--surface2);border-radius:4px;height:8px;overflow:hidden">
-          <div style="background:var(--green);height:100%;width:55%;border-radius:4px"></div>
-        </div>
-        <div style="font-size:11px;color:var(--green);margin-top:4px;font-family:'DM Mono',monospace">11 / 20 · 55%</div>
-      </div>
+    <div class="feat-card">
+      <div class="feat-icon">🏢</div>
+      <div class="feat-title">Multi-tenant</div>
+      <div class="feat-desc">Hvert selskap er fullstendig isolert. Egne brukere, produkter, lister og innstillinger. Row Level Security i bunn.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">⚙️</div>
+      <div class="feat-title">Tilpasning</div>
+      <div class="feat-desc">Egne statuser, farger, ikoner, prosjekter og produktkategorier. Tilpass appen til din bedrifts arbeidsflyt.</div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section" id="how" style="padding-top:0">
-  <div class="sec-label">Slik fungerer det</div>
-  <h2 class="sec-title reveal">Fra liste til salg<br>på minutter.</h2>
+<section class="section" id="how">
+  <div class="section-label">Kom i gang</div>
+  <h2 class="section-title reveal">Fra Excel til salg<br>på under 5 minutter.</h2>
+  <p class="section-sub reveal">Fire enkle steg til et fungerende salgsverktøy.</p>
   <div class="steps reveal">
     <div class="step">
-      <div class="step-title">Last opp liste</div>
-      <div class="step-desc">Importer Excel-fil, velg listetype og salgsperiode. Adressene plottes automatisk på kartet.</div>
+      <div class="step-title">Last opp adresser</div>
+      <div class="step-desc">Dra Excel-filen inn. FeltKart gjenkjenner adressekolonner automatisk og geokoder via Kartverket.</div>
     </div>
     <div class="step">
-      <div class="step-title">Tildel selgere</div>
-      <div class="step-desc">Tegn soner på kartet og knytt dem til selgere. Hver selger ser kun sine egne adresser.</div>
+      <div class="step-title">Tegn områder</div>
+      <div class="step-desc">Marker polygoner på kartet og tildel én selger per område. Alle adresser innenfor tildeles automatisk.</div>
     </div>
     <div class="step">
-      <div class="step-title">Jobb i felt</div>
-      <div class="step-desc">Selger åpner FeltKart på mobil, ser adresser i nærheten og registrerer status på dør.</div>
+      <div class="step-title">Selger går ut</div>
+      <div class="step-desc">Selger åpner appen på mobil, ser sine adresser, registrerer besøk med ett klikk. GPS logges automatisk.</div>
     </div>
     <div class="step">
-      <div class="step-title">Følg opp</div>
-      <div class="step-desc">Ring "Ikke hjemme" fra oppfølgingslisten. Se provisjon og fortjeneste oppdatere seg i sanntid.</div>
+      <div class="step-title">Følg opp og lukk</div>
+      <div class="step-desc">Admin ser aktivitet i sanntid. Oppfølginger, statistikk og provisjon oppdateres automatisk.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="section">
+  <div class="section-label">Hvem passer det for?</div>
+  <h2 class="section-title reveal">Bygget for team<br>som banker på dører.</h2>
+  <p class="section-sub reveal">FeltKart passer for alle som har selgere i felt – fra 2 til 200 personer.</p>
+  <div class="audience-grid reveal">
+    <div class="audience-card">
+      <h3>Teamleder / Admin</h3>
+      <p>Full oversikt over hvem som jobber hvor, konverteringsrate per selger, lønnsomhet per oppdragsgiver, og GPS-verifisering av besøk.</p>
+      <ul>
+        <li>Dashboard med sanntidsdata</li>
+        <li>Tildel selgere til polygoner</li>
+        <li>Overfør adresser mellom selgere</li>
+        <li>Eksporter til Excel</li>
+        <li>Se selgerposisjoner live</li>
+      </ul>
+    </div>
+    <div class="audience-card">
+      <h3>Selger</h3>
+      <p>Enkel mobil-app med kart, kundekort og kalender. Registrer besøk, sett opp callbacks og se din egen provisjon – alt uten å forlate appen.</p>
+      <ul>
+        <li>Kart med alle tildelte adresser</li>
+        <li>Registrer besøk fra mobil</li>
+        <li>Oppfølgingskalender med push-varsel</li>
+        <li>Se egne salg og provisjon</li>
+        <li>Toppliste for motivasjon</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
 <section class="section" id="pricing">
-  <div class="sec-label">Priser</div>
-  <h2 class="sec-title reveal">Enkle priser.<br>Ingen overraskelser.</h2>
-  <p class="sec-sub reveal">Betaling med kort ved bestilling. Ingen bindingstid, ingen oppsettskostnad.</p>
+  <div class="section-label">Priser</div>
+  <h2 class="section-title reveal">Enkle planer.<br>Ingen overraskelser.</h2>
+  <p class="section-sub reveal">Start med gratis prøveperiode. Ingen kort kreves.</p>
   <div class="price-grid reveal">
     <div class="price-card">
       <div class="price-name">Starter</div>
-      <div class="price-amt">990 <span>kr/mnd</span></div>
-      <div class="price-desc">Perfekt for små team i oppstart</div>
+      <div class="price-amt">499<span> kr/mnd</span></div>
+      <div class="price-desc">For små team som kommer i gang.</div>
       <ul class="price-feats">
-        <li>Opptil 3 selgere</li>
-        <li>Kart og kundekort</li>
-        <li>Excel-import</li>
-        <li>Oppfølgingsliste for TM</li>
-        <li>Onboarding-film</li>
+        <li>Opptil 5 selgere</li>
+        <li>10 000 adresser</li>
+        <li>10 lister</li>
+        <li>Kart + kundekort</li>
+        <li>Provisjonsberegning</li>
       </ul>
       <a href="/signup.html" class="price-cta ghost">Kom i gang</a>
     </div>
     <div class="price-card featured">
-      <div class="price-badge">MEST POPULÆR</div>
+      <div class="price-badge">Mest populær</div>
       <div class="price-name">Pro</div>
-      <div class="price-amt">2 490 <span>kr/mnd</span></div>
-      <div class="price-desc">For voksende salgsteam</div>
+      <div class="price-amt">1 499<span> kr/mnd</span></div>
+      <div class="price-desc">For etablerte salgsteam med flere oppdragsgivere.</div>
       <ul class="price-feats">
-        <li>Opptil 15 selgere</li>
-        <li>Provisjonsberegning</li>
-        <li>Admin økonomi-dashboard</li>
-        <li>Selgerportal med toppliste</li>
-        <li>Salgsmål og budsjett</li>
+        <li>Opptil 25 selgere</li>
+        <li>100 000 adresser</li>
+        <li>Ubegrenset lister</li>
+        <li>GPS-verifisering</li>
+        <li>Salgsmål + statistikk</li>
+        <li>Prosjekter og kategorier</li>
         <li>Prioritert support</li>
       </ul>
-      <a href="/signup.html" class="price-cta primary">Start nå →</a>
+      <a href="/signup.html" class="price-cta primary">Start gratis prøveperiode</a>
     </div>
     <div class="price-card">
       <div class="price-name">Enterprise</div>
-      <div class="price-amt">Avtale</div>
-      <div class="price-desc">For store organisasjoner</div>
+      <div class="price-amt">Ta kontakt</div>
+      <div class="price-desc">For store organisasjoner med spesielle behov.</div>
       <ul class="price-feats">
         <li>Ubegrenset selgere</li>
-        <li>Egne leverandører og provisjoner</li>
-        <li>Eget brand og logo</li>
-        <li>Eget domene</li>
-        <li>API-integrasjoner</li>
-        <li>Dedikert support</li>
+        <li>Ubegrenset adresser</li>
+        <li>Egne integrasjoner (Salesforce, CRM)</li>
+        <li>Dedikert onboarding</li>
+        <li>SLA-garanti</li>
+        <li>Tilpassede rapporter</li>
       </ul>
-      <a href="/signup.html" class="price-cta ghost">Ta kontakt</a>
+      <a href="mailto:henrik@consal.no" class="price-cta ghost">Kontakt oss</a>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<div class="cta-banner reveal" id="contact">
-  <h2>Klar til å selge smartere?</h2>
-  <p>Ta kontakt – vi setter opp FeltKart for deg på under én dag.</p>
-  <a href="/cdn-cgi/l/email-protection#315954587157545d455a5043451f5f5e" class="btn-primary">Send oss en e-post →</a>
+<div class="cta-section reveal">
+  <h2>Klar til å få salgsteamet<br>på kartet?</h2>
+  <p>Start gratis i dag. Ingen kredittkort kreves. Ferdig oppsett på 5 minutter.</p>
+  <a href="/signup.html" class="btn btn-primary">Start gratis prøveperiode →</a>
 </div>
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><div class="nav-dot" style="width:6px;height:6px"></div>FeltKart</div>
-  <div>Laget i Bergen 🇳🇴</div>
-  <div>© 2026 FeltKart</div>
+  <div class="footer-logo"><div class="nav-dot"></div> FeltKart</div>
+  <div>
+    <a href="mailto:henrik@consal.no" style="color:var(--text-muted);text-decoration:none">henrik@consal.no</a>
+    &nbsp;·&nbsp; Børsan AS &nbsp;·&nbsp; Org.nr 930 XXXXXX
+  </div>
+  <div>© 2026 FeltKart. Alle rettigheter forbeholdt.</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+<script>
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
 </script>
+</body>
+</html>

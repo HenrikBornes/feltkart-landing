@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="no" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Funksjoner — FeltKart</title>
+<meta name="description" content="Kart, KPI'er, konkurranser, mobil for selgere — alt feltsalgsteamet trenger." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../mockups.css" />
+<script>try { var t = localStorage.getItem('feltkart-landing-theme') || 'light'; document.documentElement.setAttribute('data-theme', t); } catch(e){}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a>
+    <nav class="nav-links">
+      <a href="funksjoner.html" class="active">Funksjoner</a>
+      <a href="hvordan.html">Hvordan det fungerer</a>
+      <a href="priser.html">Priser</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.feltkart.no" class="btn btn-ghost" style="padding:8px 14px; font-size:13px;">Logg inn</a>
+      <a href="kontakt.html" class="btn btn-primary" style="padding:8px 14px; font-size:13px;">Ta kontakt</a>
+    </div>
+  </div>
+</header>
+
+<section class="subpage-hero" data-screen-label="Funksjoner">
+  <div class="container">
+    <div class="breadcrumbs"><a href="../index.html">Forside</a><span class="sep">/</span><span>Funksjoner</span></div>
+    <h1>Alt salgsteamet trenger — i ett verktøy</h1>
+    <p class="subpage-lede">Fra første adresseliste til full lønnsomhetsoversikt. Bygd sammen med selgere som banker dører til daglig.</p>
+  </div>
+</section>
+
+<section style="padding-top: 40px;">
+  <div class="container">
+    <div class="feature-row">
+      <div class="feature-copy">
+        <span class="feature-tag">CRM &amp; sanntidsdata</span>
+        <h2>Du ser hva som faktisk skjer — og hva som må jobbes med</h2>
+        <p>Dører banket, salg, hitrate, kontaktrate — oppdatert i samme sekund som selgeren registrerer salget. Like viktig: du ser hva hver enkelt selger sliter med, og kan coache der det betyr mest. Dashbord gir deg løpende oversikt over selskapets inntekter. </p>
+        <ul class="feature-bullets">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Per-selger innsikt: hvilke produkter, hvilke tider, hvilke lister</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CPO, AGA, feriepenger og pensjon i samme regnestykke</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Konkrete coaching-punkter — ingen selger er lik</li>
+        </ul>
+      </div>
+      <div class="feature-visual frame">
+        <img src="../screenshots/dashboard.png" alt="FeltKart dashboard" class="feature-screenshot" loading="lazy" decoding="async"/>
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-copy">
+        <span class="feature-tag">Kart &amp; områder</span>
+        <h2>Tegn opp territoriet — selgere ser sitt</h2>
+        <p>Last opp adresselister, tegn opp distrikter og fordel adressene. Hver selger ser bare sitt tildelte område, med fargekoder per status: solgt, ikke hjemme, oppfølging.</p>
+        <ul class="feature-bullets">
+          <li class="hilite"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong>Geokoding av Excel-lister</strong><span>Last opp listene dine — vi plasserer hver adresse på kartet automatisk.</span></div></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Tegn polygoner og enkel fordeling av adresser</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Adresseclustring viser hvor det er flest leads</li>
+        </ul>
+      </div>
+      <div class="feature-visual frame">
+        <img src="../screenshots/map-area.png" alt="FeltKart kart" class="feature-screenshot" loading="lazy" decoding="async"/>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-copy">
+        <span class="feature-tag">Konkurranser &amp; leaderboard</span>
+        <h2>Hold motoren i gang</h2>
+        <p>Lag konkurranser per uke, måned eller per produkt. Live leaderboard på storskjerm i kontoret, push-varsler ved nye salg og premier på topp 3. </p>
+        <ul class="feature-bullets">
+          <li>Sett opp konkurranser med egne regler og premier</li>
+          <li>Live podium og leaderboard, oppdatert ved hvert salg</li>
+          <li>Tavle med teamfeed og milepæler</li>
+        </ul>
+      </div>
+      <div class="feature-visual frame">
+        <div style="padding: 16px; background: var(--bg-base);">
+          <div class="comp-grid">
+            <div class="comp-hero">
+              <div class="name">Vårsprint 2026</div>
+              <div class="desc">Mest salg av Glassfiber Premium · 1.–30. april</div>
+              <div class="countdown">04d 12t 38m</div>
+            </div>
+            <div class="podium-row">
+              <div class="podium"><div class="rank">2.</div><div class="av">EJ</div><div class="nm">Emilie J.</div><div class="sc">19</div></div>
+              <div class="podium first"><div class="rank">1.</div><div class="av">SH</div><div class="nm">Sondre H.</div><div class="sc">23</div></div>
+              <div class="podium"><div class="rank">3.</div><div class="av">MK</div><div class="nm">Mathias K.</div><div class="sc">17</div></div>
+            </div>
+            <div class="lb-list">
+              <div class="lb-row"><span class="rk">4</span><div><div class="lb-name">Ingrid Sørli</div><div class="lb-stats"><span>14 salg</span><span>187 dører</span></div></div><span class="lb-pts">14</span></div>
+              <div class="lb-row"><span class="rk">5</span><div><div class="lb-name">Andreas Berg</div><div class="lb-stats"><span>12 salg</span><span>164 dører</span></div></div><span class="lb-pts">12</span></div>
+              <div class="lb-row"><span class="rk">6</span><div><div class="lb-name">Henriette Ulven</div><div class="lb-stats"><span>11 salg</span><span>142 dører</span></div></div><span class="lb-pts">11</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-copy">
+        <span class="feature-tag">Mobil for selgere</span>
+        <h2>Bygd for å brukes ute</h2>
+        <p>Selgeren får sitt kart med adresser, statuser og snarveier i lomma. Registrer statuser, oversikt over salg, og notifikasjoner på salg i teamet for ytterligere motivasjon. Feltkart er bygget av og for feltselgere. </p>
+        <ul class="feature-bullets">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Optimalisert for én hånd og tempo på mobil eller nettbrett</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Kalender med oppfølgning</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Pushvarsler fra admin ved informasjonsflyt</li>
+        </ul>
+      </div>
+      <div class="feature-visual" style="display:flex; justify-content:center; box-shadow:none; border:none; background:transparent;">
+        <div class="mobile-mock">
+          <div class="mobile-screen">
+            <div class="mobile-status"><span>09:42</span></div>
+            <div class="mobile-header"><div class="title">Mitt kart</div></div>
+            <div class="mobile-map">
+              <svg style="position:absolute; inset:0; width:100%; height:100%;" viewBox="0 0 230 280" preserveAspectRatio="none">
+                <defs><pattern id="mst2" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M0,18 L36,18 M18,0 L18,36" stroke="#b8d6ec" stroke-width="0.5" opacity="0.6"/></pattern></defs>
+                <rect width="230" height="280" fill="url(#mst2)"/>
+              </svg>
+              <div class="map-pin green" style="left:24%; top:30%;"></div>
+              <div class="map-pin amber" style="left:50%; top:42%;"></div>
+              <div class="map-pin green" style="left:68%; top:35%;"></div>
+              <div class="map-pin red" style="left:38%; top:60%;"></div>
+              <div class="mobile-bottom-sheet">
+                <div class="addr">Storgata 14</div>
+                <div class="sub">Du er her · 4. etasje</div>
+                <div class="actions"><span class="primary">Solgt</span><span>Ikke hj.</span><span>Følg opp</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="coaching" data-screen-label="Per-selger" style="background: var(--bg-tinted); border-top: 1px solid var(--border-soft); margin-top: 40px;">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Per-selger innsikt</span>
+      <h2>Hver selger er forskjellig — dataen forteller deg hvordan</h2>
+      <p>FeltKart bryter tallene ned per person, produkt og tidspunkt. Resultatet: konkrete coaching-punkter, ikke generelle pep-talks. Feltkart gir innsikt både for selger og ledere som bygger verdi.</p>
+    </div>
+    <div class="coach-grid">
+      <div class="coach-card">
+        <div class="coach-head"><div class="av">SH</div><div><div class="nm">Sondre Halvorsen</div><div class="role">Team Oslo Vest · 8 måneder</div></div></div>
+        <div class="coach-stats"><div><span>Hitrate</span><b>9,2%</b></div><div><span>Snittordre</span><b>1 480 kr</b></div><div><span>Beste tid</span><b>17–19</b></div></div>
+        <div class="coach-insight up"><div class="label">Sterk på</div><div class="text">Fiber Premium — 14% hitrate, 3× teamsnitt</div></div>
+        <div class="coach-insight down"><div class="label">Coach på</div><div class="text">TV-pakker — kun 2,1% hitrate. Mister kunden i pris-pitchen.</div></div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-head"><div class="av">EJ</div><div><div class="nm">Emilie Johansen</div><div class="role">Team Oslo Vest · 4 måneder</div></div></div>
+        <div class="coach-stats"><div><span>Hitrate</span><b>6,4%</b></div><div><span>Snittordre</span><b>980 kr</b></div><div><span>Beste tid</span><b>11–13</b></div></div>
+        <div class="coach-insight up"><div class="label">Sterk på</div><div class="text">Kontaktrate — 58%, høyest i teamet. Gode dør-åpninger.</div></div>
+        <div class="coach-insight down"><div class="label">Coach på</div><div class="text">Lukker for tidlig — 1 av 3 går i "oppfølging" som ikke konverterer.</div></div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-head"><div class="av">MK</div><div><div class="nm">Mathias Krogh</div><div class="role">Team Oslo Vest · 14 måneder</div></div></div>
+        <div class="coach-stats"><div><span>Hitrate</span><b>7,8%</b></div><div><span>Snittordre</span><b>2 110 kr</b></div><div><span>Beste tid</span><b>09–11</b></div></div>
+        <div class="coach-insight up"><div class="label">Sterk på</div><div class="text">Snittordre — 2 110 kr, ofte mersalg. Kunder kjøper hele pakken.</div></div>
+        <div class="coach-insight down"><div class="label">Coach på</div><div class="text">Volum — banker bare 64 dører/dag. Bør opp i 90 for å nå målet.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 80px 0;">
+  <div class="container" style="text-align:center;">
+    <h2>Klar for å se det i din virkelighet?</h2>
+    <p style="margin-top:14px; color:var(--text-secondary); font-size:17px;">Vi setter opp brukere og dere er i felt samme dag.</p>
+    <div class="hero-cta" style="justify-content:center; margin-top:28px;">
+      <a href="kontakt.html" class="btn btn-primary btn-lg">Ta kontakt →</a>
+      <a href="priser.html" class="btn btn-ghost btn-lg">Se priser</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="brand-col"><a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a><p>Norsk B2C-plattform for feltsalg. Bygd og hostet i Norge.</p></div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Produkt</h4><ul><li><a href="funksjoner.html">Funksjoner</a></li><li><a href="hvordan.html">Hvordan det fungerer</a></li><li><a href="priser.html">Priser</a></li><li><a href="https://app.feltkart.no">Logg inn</a></li></ul></div>
+        <div class="footer-col"><h4>Juridisk</h4><ul><li><a href="vilkar.html">Vilkår</a></li><li><a href="personvern.html">Personvern</a></li><li><a href="sikkerhet.html">Sikkerhet</a></li></ul></div>
+        <div class="footer-col"><h4>Hjelp</h4><ul><li><a href="support.html">Support</a></li><li><a href="kontakt.html">Kontakt</a></li><li><a href="mailto:post@feltkart.no">post@feltkart.no</a></li><li><a href="tel:+4795238689">+47 952 38 689</a></li></ul></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 FeltKart AS · Org.nr 933 973 719</span><span>post@feltkart.no · +47 952 38 689</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

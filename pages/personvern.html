@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personvern — FeltKart</title>
+<meta name="description" content="Personvernerklæring og GDPR-informasjon for FeltKart-tjenesten.">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body data-theme="light">
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a>
+    <nav class="nav-links">
+      <a href="funksjoner.html">Funksjoner</a>
+      <a href="hvordan.html">Hvordan det fungerer</a>
+      <a href="priser.html">Priser</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.feltkart.no" class="btn btn-ghost" style="padding:8px 14px; font-size:13px;">Logg inn</a>
+      <a href="kontakt.html" class="btn btn-primary" style="padding:8px 14px; font-size:13px;">Ta kontakt</a>
+    </div>
+  </div>
+</header>
+
+<section class="subpage-hero" data-screen-label="Personvern">
+  <div class="container">
+    <div class="breadcrumbs">
+      <a href="../index.html">Forside</a>
+      <span class="sep">/</span>
+      <span>Juridisk</span>
+      <span class="sep">/</span>
+      <span>Personvern</span>
+    </div>
+    <h1>Personvernerklæring</h1>
+    <p class="subpage-lede">Hvordan FeltKart samler inn, behandler og beskytter personopplysninger. Vi følger personvernforordningen (GDPR) og norsk personopplysningslov.</p>
+    <div class="meta">
+      <span>Versjon <b>1.4</b></span>
+      <span>Sist oppdatert <b>15. mars 2026</b></span>
+      <span>Datatilsynet referanse <b>23/04122</b></span>
+    </div>
+  </div>
+</section>
+
+<section class="container subpage-body">
+  <aside class="subpage-toc">
+    <h4>Innhold</h4>
+    <ul>
+      <li><a href="#ansvarlig">1. Behandlingsansvarlig</a></li>
+      <li><a href="#hva">2. Hva vi samler inn</a></li>
+      <li><a href="#hvorfor">3. Formål &amp; rettslig grunnlag</a></li>
+      <li><a href="#deling">4. Deling med tredjepart</a></li>
+      <li><a href="#lagring">5. Lagring &amp; sletting</a></li>
+      <li><a href="#cookies">6. Informasjonskapsler</a></li>
+      <li><a href="#rettigheter">7. Dine rettigheter</a></li>
+      <li><a href="#dpo">8. Personvernombud</a></li>
+    </ul>
+  </aside>
+
+  <article class="prose">
+    <h2 id="ansvarlig">1. Behandlingsansvarlig</h2>
+    <p>For data som FeltKart selv samler inn (f.eks. fra denne nettsiden eller når du registrerer en konto) er <strong>FeltKart AS</strong> behandlingsansvarlig. For data som Kunden registrerer i sin tenant — kunder, salg, ruter, observasjoner — er Kunden behandlingsansvarlig, og FeltKart er databehandler.</p>
+
+    <h2 id="hva">2. Hva vi samler inn</h2>
+    <h3>Som databehandler (på vegne av Kunden)</h3>
+    <ul>
+      <li><strong>Adresse-data:</strong> husnummer, etasje, leilighetsnummer, koordinater.</li>
+      <li><strong>Kunderegistrering:</strong> navn, telefon, e-post, samtykker — kun det selgeren registrerer.</li>
+      <li><strong>Salgshendelser:</strong> tidspunkt, produkt, beløp, status.</li>
+      <li><strong>Posisjonsdata:</strong> kun mens selger-appen er åpen og kun for ruteoptimalisering.</li>
+    </ul>
+    <h3>Som behandlingsansvarlig (om deg som administrator)</h3>
+    <ul>
+      <li>Navn, e-post, telefon, selskap, rolle.</li>
+      <li>Innloggingstidspunkt, IP-adresse, nettleser (sikkerhetslogg).</li>
+      <li>Faktureringsinformasjon (håndteres av Stripe).</li>
+    </ul>
+
+    <h2 id="hvorfor">3. Formål &amp; rettslig grunnlag</h2>
+    <table>
+      <tr><th>Formål</th><th>Grunnlag</th><th>Lagringstid</th></tr>
+      <tr><td>Levere tjenesten</td><td>Avtale (GDPR art. 6.1.b)</td><td>Avtaleperioden</td></tr>
+      <tr><td>Fakturering</td><td>Bokføringsloven</td><td>5 år</td></tr>
+      <tr><td>Sikkerhetslogg</td><td>Berettiget interesse</td><td>12 måneder</td></tr>
+      <tr><td>Markedsføring til kunder</td><td>Berettiget interesse</td><td>Til reservasjon</td></tr>
+    </table>
+
+    <h2 id="deling">4. Deling med tredjepart</h2>
+    <p>Vi deler ikke personopplysninger uten nødvendig grunnlag. Følgende underleverandører er godkjente databehandlere:</p>
+    <table>
+      <tr><th>Leverandør</th><th>Funksjon</th><th>Lokasjon</th></tr>
+      <tr><td>Hetzner</td><td>Hosting (servere, database)</td><td>Tyskland (EU)</td></tr>
+      <tr><td>Stripe Payments Europe</td><td>Betalingshåndtering</td><td>Irland (EU)</td></tr>
+      <tr><td>Postmark</td><td>Transaksjons-e-post</td><td>USA (SCC + DPF)</td></tr>
+      <tr><td>Sentry</td><td>Feilrapportering</td><td>Tyskland (EU)</td></tr>
+    </table>
+    <div class="callout">
+      <p>Ingen kundedata sendes utenfor EU/EØS uten gyldig overføringsgrunnlag (Standard Contractual Clauses eller EU–US Data Privacy Framework).</p>
+    </div>
+
+    <h2 id="lagring">5. Lagring &amp; sletting</h2>
+    <p>Data lagres på krypterte servere i Tyskland. Backup tas hvert 6. time og oppbevares i 30 dager. Ved opphør av kundeforholdet slettes alle data innen 30 dager. Kunden kan eksportere alt før sletting.</p>
+
+    <h2 id="cookies">6. Informasjonskapsler</h2>
+    <p>Selve applikasjonen (app.feltkart.no) bruker kun nødvendige cookies for innlogging og sikkerhet. Denne nettsiden bruker en anonymisert besøksteller (Plausible), uten cookies eller persondata.</p>
+
+    <h2 id="rettigheter">7. Dine rettigheter</h2>
+    <p>Du har rett til:</p>
+    <ul>
+      <li><strong>Innsyn</strong> i dine personopplysninger.</li>
+      <li><strong>Retting</strong> av feilaktige opplysninger.</li>
+      <li><strong>Sletting</strong> («retten til å bli glemt»).</li>
+      <li><strong>Dataportabilitet</strong> — eksport i maskinlesbart format.</li>
+      <li><strong>Innsigelse</strong> mot behandling basert på berettiget interesse.</li>
+      <li><strong>Klage</strong> til Datatilsynet (datatilsynet.no).</li>
+    </ul>
+    <p>Henvendelser besvares innen 30 dager. Send forespørsel til <a href="mailto:personvern@feltkart.no">personvern@feltkart.no</a>.</p>
+
+    <h2 id="dpo">8. Personvernombud</h2>
+    <p>FeltKart har utpekt personvernombud:</p>
+    <p><strong>Anette Solberg</strong><br>
+    E-post: <a href="mailto:dpo@feltkart.no">dpo@feltkart.no</a><br>
+    Telefon: +47 22 00 00 01</p>
+
+    <hr>
+    <p style="font-size:13px; color:var(--text-muted);">Se også <a href="vilkar.html">vilkår</a> og <a href="sikkerhet.html">sikkerhet</a>.</p>
+  </article>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="brand-col">
+        <a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a>
+        <p>Norsk B2C-plattform for feltsalg. Bygd og hostet i Norge.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="funksjoner.html">Funksjoner</a></li>
+            <li><a href="hvordan.html">Hvordan det fungerer</a></li>
+            <li><a href="priser.html">Priser</a></li>
+            <li><a href="https://app.feltkart.no">Logg inn</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Juridisk</h4>
+          <ul>
+            <li><a href="vilkar.html">Vilkår</a></li>
+            <li><a href="personvern.html">Personvern</a></li>
+            <li><a href="sikkerhet.html">Sikkerhet</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hjelp</h4>
+          <ul>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="mailto:post@feltkart.no">post@feltkart.no</a></li>
+            <li><a href="tel:+4795238689">+47 952 38 689</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 FeltKart AS · Org.nr 933 973 719</span>
+      <span>post@feltkart.no · +47 952 38 689</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

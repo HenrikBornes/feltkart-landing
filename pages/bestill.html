@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="no" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bestill FeltKart</title>
+<meta name="description" content="Kom i gang med FeltKart — sett opp tenant og betal sikkert med Stripe." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<script>try { var t = localStorage.getItem('feltkart-landing-theme') || 'light'; document.documentElement.setAttribute('data-theme', t); } catch(e){}</script>
+<style>
+  .checkout-shell {
+    min-height: calc(100vh - 80px);
+    background: var(--bg-tinted);
+    padding: 56px 0 96px;
+  }
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+    .checkout-summary { order: -1; position: static !important; }
+  }
+
+  .checkout-head { margin-bottom: 32px; }
+  .checkout-head h1 { font-size: 32px; line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .checkout-head p { margin: 0; color: var(--text-secondary); font-size: 16px; }
+
+  .step-rail {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .step-rail .s { display: flex; align-items: center; gap: 8px; }
+  .step-rail .s .num {
+    width: 22px; height: 22px; border-radius: 50%; display: inline-flex;
+    align-items: center; justify-content: center;
+    border: 1px solid var(--border); background: var(--bg-surface);
+    font-size: 11px; color: var(--text-muted);
+  }
+  .step-rail .s.active { color: var(--accent); }
+  .step-rail .s.active .num { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+  .step-rail .s.done .num { background: var(--emerald); color: #fff; border-color: var(--emerald); }
+  .step-rail .sep { flex: 1; height: 1px; background: var(--border); margin: 0 4px; align-self: center; max-width: 32px; }
+
+  .card-block {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-xs);
+  }
+  .card-block h3 {
+    margin: 0 0 4px; font-size: 16px; font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card-block h3 .num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-fg);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+  }
+  .card-block .lede { margin: 0 0 20px 32px; color: var(--text-muted); font-size: 13px; }
+
+  .field-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;
+  }
+  .field-row.single { grid-template-columns: 1fr; }
+  .field {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .field label {
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    letter-spacing: 0.01em;
+  }
+  .field input, .field select {
+    width: 100%;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 11px 13px;
+    font-family: inherit; font-size: 14px;
+    color: var(--text-primary);
+    transition: border .15s, box-shadow .15s;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+  }
+  .field .hint { font-size: 11px; color: var(--text-muted); }
+
+  /* Stepper */
+  .stepper {
+    display: inline-flex; align-items: stretch;
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    width: 180px;
+  }
+  .stepper button {
+    width: 44px; background: transparent; border: 0; cursor: pointer;
+    font-size: 18px; color: var(--text-secondary);
+    transition: background .15s;
+  }
+  .stepper button:hover { background: var(--bg-hover); color: var(--text-primary); }
+  .stepper input {
+    flex: 1; min-width: 0; border: 0; background: transparent;
+    text-align: center; font-size: 16px; font-weight: 600;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .stepper input:focus { outline: none; }
+
+  /* Stripe card mock */
+  .stripe-row {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px;
+    display: flex; align-items: center; gap: 12px;
+    transition: border .15s, box-shadow .15s;
+  }
+  .stripe-row:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+  }
+  .stripe-row input { flex: 1; min-width: 0; border: 0; background: transparent; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.04em; color: var(--text-primary); }
+  .stripe-row input::placeholder { color: var(--text-faint); letter-spacing: 0.04em; }
+  .stripe-icon {
+    width: 32px; height: 22px; border-radius: 4px;
+    background: linear-gradient(135deg, #635bff 0%, #3a30c4 100%);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 0.02em;
+  }
+  .card-double { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+
+  .pay-with {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px; padding: 10px 14px;
+    background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%);
+    border: 1px solid #ddd6fe;
+    border-radius: var(--radius);
+    font-size: 12px; color: #4c1d95;
+  }
+  [data-theme="dark"] .pay-with {
+    background: rgba(99, 91, 255, 0.08);
+    border-color: rgba(99, 91, 255, 0.3);
+    color: #c4b5fd;
+  }
+  .pay-with strong { color: inherit; }
+
+  .pay-tabs {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-bottom: 18px;
+  }
+  .pay-tab {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+    text-align: center;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: border .15s, background .15s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .pay-tab:hover { border-color: var(--border-strong); }
+  .pay-tab.active { border-color: var(--accent); background: var(--accent-subtle); color: var(--accent); }
+  .pay-tab .pt-icon { font-size: 16px; line-height: 1; }
+
+  .checkbox-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 14px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius);
+    font-size: 13px; color: var(--text-secondary);
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  .checkbox-row input { margin-top: 2px; accent-color: var(--accent); }
+  .checkbox-row a { color: var(--accent); text-decoration: underline; }
+
+  /* Summary */
+  .checkout-summary {
+    position: sticky; top: 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+  .checkout-summary h3 {
+    margin: 0 0 4px; font-size: 14px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .checkout-summary .plan-name-line {
+    font-size: 18px; font-weight: 700; color: var(--text-primary);
+    margin: 4px 0 18px;
+  }
+  .summary-line {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border-soft);
+    font-size: 14px;
+  }
+  .summary-line:last-of-type { border-bottom: 0; }
+  .summary-line .label { color: var(--text-secondary); }
+  .summary-line .label small { display: block; font-size: 11px; color: var(--text-muted); }
+  .summary-line .val { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--text-primary); }
+  .summary-total {
+    margin-top: 14px;
+    padding-top: 16px;
+    border-top: 2px solid var(--text-primary);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .summary-total .label { font-weight: 700; font-size: 15px; }
+  .summary-total .val { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .summary-total .val small { display: block; font-size: 11px; font-weight: 400; color: var(--text-muted); text-align: right; margin-top: 2px; }
+
+  .summary-meta {
+    margin-top: 18px; padding-top: 18px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 12px; color: var(--text-muted);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .summary-meta .meta-row { display: flex; align-items: center; gap: 8px; }
+  .summary-meta svg { flex-shrink: 0; }
+
+  .btn-pay {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    font-size: 15px; font-weight: 600;
+    background: var(--accent);
+    color: var(--accent-fg);
+    border: 0;
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: background .15s, transform .1s;
+  }
+  .btn-pay:hover { background: var(--accent-hover); }
+  .btn-pay:active { transform: scale(0.99); }
+
+  .stripe-foot {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 11px; color: var(--text-muted);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .stripe-foot strong { color: var(--text-secondary); font-weight: 600; letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a>
+    <nav class="nav-links">
+      <a href="funksjoner.html">Funksjoner</a>
+      <a href="hvordan.html">Hvordan det fungerer</a>
+      <a href="priser.html">Priser</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.feltkart.no" class="btn btn-ghost" style="padding:8px 14px; font-size:13px;">Logg inn</a>
+    </div>
+  </div>
+</header>
+
+<main class="checkout-shell" data-screen-label="Bestill">
+  <div class="container">
+
+    <div class="checkout-head">
+      <div class="breadcrumbs"><a href="../index.html">Forside</a><span class="sep">/</span><a href="priser.html">Priser</a><span class="sep">/</span><span>Bestill</span></div>
+      <h1>Kom i gang med FeltKart</h1>
+      <p>Sett opp kontoen din i dag — og løsningen er oppe samme dag.</p>
+    </div>
+
+    <div class="step-rail">
+      <div class="s active"><span class="num">1</span><span>Bestill</span></div>
+      <div class="sep"></div>
+      <div class="s"><span class="num">2</span><span>Onboarding</span></div>
+      <div class="sep"></div>
+      <div class="s"><span class="num">3</span><span>I felt</span></div>
+    </div>
+
+    <div class="checkout-grid">
+
+      <form id="checkoutForm" autocomplete="on">
+
+        <!-- Selskap -->
+        <div class="card-block">
+          <h3><span class="num">1</span>Om selskapet</h3>
+          <p class="lede">Vi bruker dette til kontoen og fakturering.</p>
+          <div class="field-row">
+            <div class="field">
+              <label for="company">Selskapsnavn</label>
+              <input id="company" type="text" placeholder="Eks. Solenergi Norge AS" required />
+            </div>
+            <div class="field">
+              <label for="orgnr">Org.nummer</label>
+              <input id="orgnr" type="text" placeholder="999 999 999" inputmode="numeric" required />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="contactName">Ditt navn</label>
+              <input id="contactName" type="text" placeholder="Ola Nordmann" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="phone">Telefon</label>
+              <input id="phone" type="tel" placeholder="+47 ___ __ ___" autocomplete="tel" required />
+            </div>
+          </div>
+          <div class="field-row single">
+            <div class="field">
+              <label for="email">E-post (admin-bruker)</label>
+              <input id="email" type="email" placeholder="ola@selskap.no" autocomplete="email" required />
+              <span class="hint">Brukes som innlogging på app.feltkart.no</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brukere -->
+        <div class="card-block">
+          <h3><span class="num">2</span>Antall selgere</h3>
+          <p class="lede">Du kan endre når som helst. Faktureres månedlig per aktive bruker.</p>
+          <div style="display:flex; align-items:center; gap:24px; flex-wrap: wrap;">
+            <div class="stepper">
+              <button type="button" id="usersDown" aria-label="Reduser">−</button>
+              <input id="users" type="number" min="1" max="500" value="5" />
+              <button type="button" id="usersUp" aria-label="Øk">+</button>
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+              <strong style="color: var(--text-primary); font-size: 14px;" id="usersLabel">5 selgere</strong><br>
+              <span>399 kr × bruker × mnd</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Betaling -->
+        <div class="card-block">
+          <h3><span class="num">3</span>Betaling</h3>
+          <p class="lede">Trygt og kryptert via Stripe — vi lagrer aldri kortdetaljene dine.</p>
+
+          <div class="pay-tabs">
+            <div class="pay-tab active" data-pay="card">
+              <span class="pt-icon">💳</span>
+              <span>Kort</span>
+            </div>
+            <div class="pay-tab" data-pay="vipps">
+              <span class="pt-icon" style="color:#ff5b24;">●</span>
+              <span>Vipps</span>
+            </div>
+            <div class="pay-tab" data-pay="invoice">
+              <span class="pt-icon">📄</span>
+              <span>Faktura (EHF)</span>
+            </div>
+          </div>
+
+          <div id="payCard">
+            <div class="field" style="margin-bottom: 14px;">
+              <label>Kortnummer</label>
+              <div class="stripe-row">
+                <span class="stripe-icon">VISA</span>
+                <input type="text" inputmode="numeric" placeholder="1234 1234 1234 1234" id="cc" />
+              </div>
+            </div>
+            <div class="card-double">
+              <div class="field">
+                <label>Utløpsdato</label>
+                <div class="stripe-row">
+                  <input type="text" placeholder="MM / ÅÅ" id="exp" />
+                </div>
+              </div>
+              <div class="field">
+                <label>CVC</label>
+                <div class="stripe-row">
+                  <input type="text" placeholder="CVC" id="cvc" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="payVipps" style="display:none; padding: 24px; text-align: center; background: var(--bg-base); border:1px solid var(--border); border-radius: var(--radius);">
+            <div style="font-size: 14px; color: var(--text-secondary);">Du sendes til Vipps for å bekrefte betalingen.</div>
+          </div>
+
+          <div id="payInvoice" style="display:none; padding: 24px; background: var(--bg-base); border:1px solid var(--border); border-radius: var(--radius);">
+            <div style="font-size: 14px; color: var(--text-secondary);">Vi sender EHF-faktura til org.nummeret du oppga. 14 dagers betalingsfrist.</div>
+          </div>
+
+          <label class="checkbox-row" style="margin-top: 18px;">
+            <input type="checkbox" id="terms" required />
+            <span>Jeg har lest og godtar <a href="vilkar.html" target="_blank">vilkårene</a> og <a href="personvern.html" target="_blank">personvernerklæringen</a>. Faktureres månedlig — jeg kan si opp når som helst.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-pay" id="payBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Fullfør bestilling — <span id="payTotal">3 895 kr</span></span>
+        </button>
+
+        <div class="stripe-foot">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Sikker betaling via <strong>Stripe</strong> · PCI-DSS · 3D Secure
+        </div>
+
+      </form>
+
+      <!-- Summary -->
+      <aside class="checkout-summary">
+        <h3>Din bestilling</h3>
+        <div class="plan-name-line">FeltKart — Standard</div>
+
+        <div class="summary-line">
+          <span class="label">FeltKart per bruker<small><span id="sumUsersA">5</span> × 399 kr / mnd</small></span>
+          <span class="val" id="sumUsers">1 995 kr</span>
+        </div>
+        <div class="summary-line">
+          <span class="label">Etablering<small>Engangsbeløp · onboarding av admin</small></span>
+          <span class="val">1 900 kr</span>
+        </div>
+        <div class="summary-line">
+          <span class="label">MVA (25 %)</span>
+          <span class="val" id="sumVat">974 kr</span>
+        </div>
+
+        <div class="summary-total">
+          <span class="label">I dag</span>
+          <span class="val">
+            <span id="sumTotal">4 869 kr</span>
+            <small>inkl. mva</small>
+          </span>
+        </div>
+
+        <div class="summary-meta">
+          <div class="meta-row">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>
+</span>
+          </div>
+          <div class="meta-row">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen binding</span>
+          </div>
+          <div class="meta-row">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Norsk support på tlf og e-post</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <p style="text-align:center; margin-top: 48px; color: var(--text-muted); font-size: 13px;">
+      Spørsmål før du bestiller? Ring <a href="tel:+4795238689" style="color:var(--accent);">+47 952 38 689</a> eller send e-post til <a href="mailto:salg@feltkart.no" style="color:var(--accent);">salg@feltkart.no</a>.
+    </p>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="brand-col"><a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a><p>Norsk B2C-plattform for feltsalg. Bygd og hostet i Norge.</p></div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Produkt</h4><ul><li><a href="funksjoner.html">Funksjoner</a></li><li><a href="hvordan.html">Hvordan det fungerer</a></li><li><a href="priser.html">Priser</a></li><li><a href="https://app.feltkart.no">Logg inn</a></li></ul></div>
+        <div class="footer-col"><h4>Juridisk</h4><ul><li><a href="vilkar.html">Vilkår</a></li><li><a href="personvern.html">Personvern</a></li><li><a href="sikkerhet.html">Sikkerhet</a></li></ul></div>
+        <div class="footer-col"><h4>Hjelp</h4><ul><li><a href="support.html">Support</a></li><li><a href="kontakt.html">Kontakt</a></li><li><a href="mailto:post@feltkart.no">post@feltkart.no</a></li><li><a href="tel:+4795238689">+47 952 38 689</a></li></ul></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 FeltKart AS · Org.nr 933 973 719</span><span>post@feltkart.no · +47 952 38 689</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const PRICE_PER_USER = 399;
+  const SETUP_FEE = 1900;
+  const VAT = 0.25;
+
+  const fmt = n => new Intl.NumberFormat('nb-NO').format(Math.round(n)) + ' kr';
+
+  const usersInput = document.getElementById('users');
+  const sumUsers = document.getElementById('sumUsers');
+  const sumUsersA = document.getElementById('sumUsersA');
+  const sumVat = document.getElementById('sumVat');
+  const sumTotal = document.getElementById('sumTotal');
+  const usersLabel = document.getElementById('usersLabel');
+  const payTotal = document.getElementById('payTotal');
+
+  function recalc() {
+    let n = parseInt(usersInput.value, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 500) n = 500;
+    usersInput.value = n;
+    const monthly = n * PRICE_PER_USER;
+    const subtotal = monthly + SETUP_FEE;
+    const vat = subtotal * VAT;
+    const total = subtotal + vat;
+    sumUsers.textContent = fmt(monthly);
+    sumUsersA.textContent = n;
+    sumVat.textContent = fmt(vat);
+    sumTotal.textContent = fmt(total);
+    usersLabel.textContent = n + ' selger' + (n === 1 ? '' : 'e');
+    payTotal.textContent = fmt(total);
+  }
+
+  document.getElementById('usersDown').addEventListener('click', () => {
+    usersInput.value = Math.max(1, parseInt(usersInput.value, 10) - 1);
+    recalc();
+  });
+  document.getElementById('usersUp').addEventListener('click', () => {
+    usersInput.value = Math.min(500, parseInt(usersInput.value, 10) + 1);
+    recalc();
+  });
+  usersInput.addEventListener('input', recalc);
+
+  // Payment tabs
+  document.querySelectorAll('.pay-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const k = tab.dataset.pay;
+      document.getElementById('payCard').style.display = k === 'card' ? '' : 'none';
+      document.getElementById('payVipps').style.display = k === 'vipps' ? '' : 'none';
+      document.getElementById('payInvoice').style.display = k === 'invoice' ? '' : 'none';
+    });
+  });
+
+  // Card formatting
+  const cc = document.getElementById('cc');
+  cc.addEventListener('input', () => {
+    let v = cc.value.replace(/\D/g, '').slice(0, 16);
+    cc.value = v.replace(/(.{4})/g, '$1 ').trim();
+  });
+  const exp = document.getElementById('exp');
+  exp.addEventListener('input', () => {
+    let v = exp.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+    exp.value = v;
+  });
+  document.getElementById('cvc').addEventListener('input', e => {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0,4);
+  });
+
+  document.getElementById('checkoutForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = document.getElementById('payBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" opacity="0.25"/><path d="M12 2 a10 10 0 0 1 10 10" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.8s" repeatCount="indefinite"/></path></svg><span>Behandler betaling…</span>';
+    setTimeout(() => {
+      alert('Demo: dette er en visuell mockup.\n\nI produksjon ville Stripe Checkout / Stripe Elements håndtert betalingen, og du blir sendt til en kvitteringsside + får velkomstmail.');
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Fullfør bestilling — <span id="payTotal">' + payTotal.textContent + '</span></span>';
+    }, 1800);
+  });
+
+  recalc();
+})();
+</script>
+
+</body>
+</html>

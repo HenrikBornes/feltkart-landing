@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="no" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kontakt — FeltKart</title>
+<meta name="description" content="Ta kontakt med FeltKart — vi setter opp tenant og importerer adresser samme dag." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<script>try { var t = localStorage.getItem('feltkart-landing-theme') || 'light'; document.documentElement.setAttribute('data-theme', t); } catch(e){}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a>
+    <nav class="nav-links">
+      <a href="funksjoner.html">Funksjoner</a>
+      <a href="hvordan.html">Hvordan det fungerer</a>
+      <a href="priser.html">Priser</a>
+      <a href="kontakt.html" class="active">Kontakt</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.feltkart.no" class="btn btn-ghost" style="padding:8px 14px; font-size:13px;">Logg inn</a>
+      <a href="kontakt.html" class="btn btn-primary" style="padding:8px 14px; font-size:13px;">Ta kontakt</a>
+    </div>
+  </div>
+</header>
+
+<section class="subpage-hero" data-screen-label="Kontakt">
+  <div class="container">
+    <div class="breadcrumbs"><a href="../index.html">Forside</a><span class="sep">/</span><span>Kontakt</span></div>
+    <h1>La oss snakke</h1>
+    <p class="subpage-lede">Send en kort e-post — vi setter opp tenant, importerer adresselistene og inviterer selgerne. Du er i drift samme dag.</p>
+  </div>
+</section>
+
+<section style="padding: 40px 0 96px;">
+  <div class="container">
+    <div class="contact-wrap">
+      <div class="contact-intro">
+        <span class="eyebrow"><span class="eyebrow-tick"></span>Ta kontakt</span>
+        <h2>Vi svarer samme dag</h2>
+        <p class="contact-lede">Fyll ut skjemaet eller send oss en mail direkte. Vi tar kontakt med deg og setter opp en kort demo som passer ditt team.</p>
+        <ul class="contact-channels">
+          <li><span class="ch-label">Salg</span><a href="mailto:salg@feltkart.no">salg@feltkart.no</a></li>
+          <li><span class="ch-label">Generelt</span><a href="mailto:post@feltkart.no">post@feltkart.no</a></li>
+          <li><span class="ch-label">Telefon</span><a href="tel:+4795238689">+47 952 38 689</a></li>
+          <li><span class="ch-label">Support</span><a href="support.html">Support &amp; brukerstøtte →</a></li>
+          <li><span class="ch-label">Adresse</span><span style="color:var(--text-primary);">Kanalveien 107, 5068 BERGEN</span></li>
+        </ul>
+      </div>
+      <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('.form-sent').hidden=false; this.querySelectorAll('input,textarea,button').forEach(el=>el.disabled=true);">
+        <div class="field"><label for="cf-name">Navn</label><input id="cf-name" type="text" required placeholder="Ola Nordmann"></div>
+        <div class="field"><label for="cf-company">Selskap</label><input id="cf-company" type="text" placeholder="Kraft AS"></div>
+        <div class="field"><label for="cf-email">E-post</label><input id="cf-email" type="email" required placeholder="ola@selskap.no"></div>
+        <div class="field"><label for="cf-team">Antall selgere</label><input id="cf-team" type="text" placeholder="f.eks. 12"></div>
+        <div class="field field-full"><label for="cf-msg">Melding</label><textarea id="cf-msg" rows="4" placeholder="Hva ønsker dere å løse?"></textarea></div>
+        <div class="field field-full form-actions">
+          <button type="submit" class="btn btn-primary">Send forespørsel →</button>
+          <span class="form-fineprint">Vi svarer normalt innen 4 arbeidstimer.</span>
+        </div>
+        <div class="form-sent" hidden><strong>Takk!</strong> Vi tar kontakt på e-post i løpet av kort tid.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="brand-col"><a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a><p>Norsk B2C-plattform for feltsalg. Bygd og hostet i Norge.</p></div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Produkt</h4><ul><li><a href="funksjoner.html">Funksjoner</a></li><li><a href="hvordan.html">Hvordan det fungerer</a></li><li><a href="priser.html">Priser</a></li><li><a href="https://app.feltkart.no">Logg inn</a></li></ul></div>
+        <div class="footer-col"><h4>Juridisk</h4><ul><li><a href="vilkar.html">Vilkår</a></li><li><a href="personvern.html">Personvern</a></li><li><a href="sikkerhet.html">Sikkerhet</a></li></ul></div>
+        <div class="footer-col"><h4>Hjelp</h4><ul><li><a href="support.html">Support</a></li><li><a href="kontakt.html">Kontakt</a></li><li><a href="mailto:post@feltkart.no">post@feltkart.no</a></li><li><a href="tel:+4795238689">+47 952 38 689</a></li></ul></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 FeltKart AS · Org.nr 933 973 719</span><span>post@feltkart.no · +47 952 38 689</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Velkommen til FeltKart</title>
+<!--[if mso]>
+<style>* { font-family: Arial, sans-serif !important; }</style>
+<![endif]-->
+<style>
+  body { margin: 0; padding: 0; background: #efeae0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #14202e; -webkit-font-smoothing: antialiased; }
+  table { border-collapse: collapse; }
+  img { display: block; border: 0; }
+  a { color: #07223c; text-decoration: underline; }
+  .preview { display: none !important; opacity: 0; height: 0; overflow: hidden; }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#efeae0;">
+
+<span class="preview">Velkommen til FeltKart — kontoen din er klar. Slik kommer du i gang →</span>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#efeae0;padding:32px 16px;">
+<tr><td align="center">
+
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+  <!-- Brand -->
+  <tr><td style="padding:0 0 20px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="left" style="font-family:'Inter',Helvetica,Arial,sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.01em;">
+          <span style="color:#14202e;">Felt</span><span style="color:#07223c;">Kart</span>
+        </td>
+        <td align="right" style="font-family:'JetBrains Mono',Menlo,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#6b7280;">
+          Velkomstmail
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+
+  <!-- Hero card -->
+  <tr><td style="background:#ffffff;border:1px solid #d9d2c2;border-radius:12px;overflow:hidden;">
+
+    <!-- Hero band -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="background:#07223c;padding:44px 40px;color:#ffffff;font-family:'Inter',Helvetica,Arial,sans-serif;">
+          <div style="font-family:'JetBrains Mono',Menlo,monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#a3b9d3;margin-bottom:16px;">
+            ● Konto opprettet
+          </div>
+          <h1 style="margin:0 0 12px 0;font-size:30px;line-height:1.2;font-weight:700;letter-spacing:-0.01em;color:#ffffff;">
+            Velkommen til FeltKart
+          </h1>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#cbd5e1;max-width:480px;">
+            Hei {{firstname}}, takk for at du valgte oss. Tenanten til <strong style="color:#ffffff;">{{company}}</strong> er klar — under finner du alt du trenger for å komme i gang.
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Body -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="padding:36px 40px 24px;font-family:'Inter',Helvetica,Arial,sans-serif;">
+
+          <p style="margin:0 0 24px 0;font-size:15px;line-height:1.6;color:#3b4a5c;">
+            Du logger inn på <a href="https://app.feltkart.no" style="color:#07223c;font-weight:600;">app.feltkart.no</a> med e-posten du oppga. Første gang setter du selv passord — vi sender deg ikke et i klartekst.
+          </p>
+
+          <!-- CTA -->
+          <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 32px 0;">
+            <tr>
+              <td style="background:#07223c;border-radius:8px;">
+                <a href="https://app.feltkart.no" style="display:inline-block;padding:15px 28px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.005em;">
+                  Logg inn på app.feltkart.no  →
+                </a>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Account box -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f4ee;border:1px solid #e6dfce;border-radius:8px;margin-bottom:32px;">
+            <tr>
+              <td style="padding:18px 20px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:13px;color:#3b4a5c;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="120" style="font-family:'JetBrains Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;padding:6px 0;">Tenant</td>
+                    <td style="padding:6px 0;color:#14202e;font-weight:500;">{{tenant_slug}}.feltkart.no</td>
+                  </tr>
+                  <tr><td colspan="2" style="border-top:1px dashed #d9d2c2;line-height:0;">&nbsp;</td></tr>
+                  <tr>
+                    <td style="font-family:'JetBrains Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;padding:6px 0;">Admin</td>
+                    <td style="padding:6px 0;color:#14202e;font-weight:500;">{{admin_email}}</td>
+                  </tr>
+                  <tr><td colspan="2" style="border-top:1px dashed #d9d2c2;line-height:0;">&nbsp;</td></tr>
+                  <tr>
+                    <td style="font-family:'JetBrains Mono',Menlo,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;padding:6px 0;">Plan</td>
+                    <td style="padding:6px 0;color:#14202e;font-weight:500;">FeltKart · {{user_count}} brukere</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Steps -->
+          <h2 style="margin:0 0 18px 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;color:#14202e;">
+            Slik kommer dere i felt
+          </h2>
+
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <tr>
+              <td width="36" valign="top" style="padding:4px 0;">
+                <table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="28" height="28" align="center" style="background:#07223c;color:#ffffff;border-radius:14px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;">1</td></tr></table>
+              </td>
+              <td valign="top" style="padding:4px 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;">
+                <div style="font-size:15px;font-weight:600;color:#14202e;margin-bottom:4px;">Logg inn og sett passord</div>
+                <div style="font-size:14px;line-height:1.55;color:#6b7280;">Bruk lenken over og opprett ditt eget passord.</div>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" style="padding:4px 0;">
+                <table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="28" height="28" align="center" style="background:#07223c;color:#ffffff;border-radius:14px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;">2</td></tr></table>
+              </td>
+              <td valign="top" style="padding:4px 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;">
+                <div style="font-size:15px;font-weight:600;color:#14202e;margin-bottom:4px;">Sett opp leverandør og inviter selgere</div>
+                <div style="font-size:14px;line-height:1.55;color:#6b7280;">Opprett leverandør, CPO og provisjoner under Innstillinger. Legg deretter til selgerne dine — de får invitasjon på e-post og logger inn på samme app fra mobil.</div>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" style="padding:4px 0;">
+                <table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="28" height="28" align="center" style="background:#07223c;color:#ffffff;border-radius:14px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;">3</td></tr></table>
+              </td>
+              <td valign="top" style="padding:4px 0 16px;font-family:'Inter',Helvetica,Arial,sans-serif;">
+                <div style="font-size:15px;font-weight:600;color:#14202e;margin-bottom:4px;">Tegn salgsområder og tildel adresser</div>
+                <div style="font-size:14px;line-height:1.55;color:#6b7280;">Last opp adresseliste (CSV/Excel — FeltKart geokoder automatisk), tegn polygoner i kartet og fordel områdene til selgerne. De får varsel med en gang og kan starte samme dag.</div>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" style="padding:4px 0;">
+                <table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="28" height="28" align="center" style="background:#10b981;color:#ffffff;border-radius:14px;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;">✓</td></tr></table>
+              </td>
+              <td valign="top" style="padding:4px 0;font-family:'Inter',Helvetica,Arial,sans-serif;">
+                <div style="font-size:15px;font-weight:600;color:#14202e;margin-bottom:4px;">Følg salget live på dashbordet</div>
+                <div style="font-size:14px;line-height:1.55;color:#6b7280;">Hitrate, dører banket, kontaktrate — oppdatert i samme sekund som selgeren registrerer. Admin kan følge opp selgere i sanntid - bra for deg og selger. </div>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Onboarding offer -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#07223c;border-radius:8px;margin-bottom:28px;">
+            <tr>
+              <td style="padding:22px 24px;font-family:'Inter',Helvetica,Arial,sans-serif;color:#ffffff;">
+                <div style="font-family:'JetBrains Mono',Menlo,monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#a3b9d3;margin-bottom:8px;">Inkludert i etableringen</div>
+                <div style="font-size:16px;font-weight:600;margin-bottom:6px;">Vi tar onboardingen sammen</div>
+                <div style="font-size:14px;line-height:1.55;color:#cbd5e1;margin-bottom:14px;">Bestill en 30-minutters videoøkt med oss — systemet er veldig intuitivt, men vi setter opp første adresseliste og områder sammen, så du er trygg på systemet før første dør bankes.</div>
+                <a href="https://app.feltkart.no/onboarding" style="display:inline-block;font-size:14px;font-weight:600;color:#ffffff;text-decoration:underline;">Bestill onboarding-økt →</a>
+              </td>
+            </tr>
+          </table>
+
+          <p style="margin:0 0 8px 0;font-size:14px;line-height:1.6;color:#3b4a5c;">
+            Om du står fast eller har spørsmål er vi bare en telefonsamtale unna:
+          </p>
+          <p style="margin:0 0 8px 0;font-size:14px;line-height:1.6;color:#14202e;">
+            📞 <a href="tel:+4795238689" style="color:#07223c;font-weight:500;">+47 952 38 689</a><br>
+            ✉️ <a href="mailto:support@feltkart.no" style="color:#07223c;font-weight:500;">support@feltkart.no</a>
+          </p>
+
+          <p style="margin:32px 0 0 0;font-size:14px;line-height:1.6;color:#3b4a5c;">
+            Lykke til i felt — vi heier på dere.<br>
+            <strong style="color:#14202e;">Teamet i FeltKart</strong>
+          </p>
+
+        </td>
+      </tr>
+    </table>
+
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="padding:24px 8px 0;font-family:'Inter',Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#6b7280;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+          <strong style="color:#3b4a5c;">FeltKart AS</strong> · Org.nr 933 973 719<br>
+          Kanalveien 107, 5068 Bergen · <a href="mailto:post@feltkart.no" style="color:#6b7280;">post@feltkart.no</a> · <a href="tel:+4795238689" style="color:#6b7280;">+47 952 38 689</a>
+        </td>
+      </tr>
+      <tr><td style="padding-top:12px;font-size:11px;color:#9aa0aa;">
+        Denne mailen ble sendt fordi du opprettet en konto hos FeltKart. Spørsmål om fakturering eller konto: <a href="mailto:post@feltkart.no" style="color:#9aa0aa;">post@feltkart.no</a>.
+      </td></tr>
+    </table>
+  </td></tr>
+
+</table>
+
+</td></tr>
+</table>
+
+</body>
+</html>

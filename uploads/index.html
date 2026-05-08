@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FeltKart – Verktøy for feltsalg</title>
+<meta name="description" content="FeltKart gir dør-til-dør-salgsteam kart, kundekort, oppfølging og provisjon i én app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',system-ui,sans-serif; color:#0f172a; background:#fff; -webkit-font-smoothing:antialiased; }
+
+/* ── Nav ─────────────────────── */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(4,14,26,0.95); backdrop-filter:blur(16px); padding:0 48px; height:60px; display:flex; align-items:center; justify-content:space-between; }
+.logo { font-weight:700; font-size:17px; color:#f1f5f9; display:flex; align-items:center; gap:8px; text-decoration:none; }
+.logo-dot { width:7px; height:7px; border-radius:50%; background:#10b981; }
+.nav-right { display:flex; align-items:center; gap:24px; }
+.nav-right a { font-size:13px; color:#94a3b8; text-decoration:none; font-weight:500; }
+.nav-right a:hover { color:#f1f5f9; }
+.nav-btn { background:#10b981; color:#fff; padding:7px 16px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none; }
+
+/* ── Hero (dark) ─────────────── */
+.hero { background:#040e1a; padding:140px 48px 0; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-20%; left:30%; width:800px; height:800px; background:radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 60%); pointer-events:none; }
+.hero::after { content:''; position:absolute; top:10%; right:10%; width:600px; height:600px; background:radial-gradient(circle, rgba(56,189,248,0.05) 0%, transparent 60%); pointer-events:none; }
+.hero-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+.hero h1 { font-size:clamp(36px,5.5vw,64px); font-weight:800; line-height:1.06; letter-spacing:-2px; color:#f1f5f9; margin-bottom:20px; max-width:700px; }
+.hero p { font-size:17px; color:#94a3b8; line-height:1.6; margin-bottom:36px; max-width:480px; }
+.hero-actions { display:flex; gap:12px; align-items:center; margin-bottom:64px; }
+.btn-accent { background:#10b981; color:#fff; padding:13px 28px; border-radius:8px; font-size:15px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:transform 0.15s, box-shadow 0.15s; }
+.btn-accent:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(16,185,129,0.3); }
+.btn-ghost { font-size:15px; color:#94a3b8; font-weight:500; text-decoration:none; padding:13px 20px; }
+.btn-ghost:hover { color:#f1f5f9; }
+
+/* Browser mockup */
+.browser-frame { max-width:1000px; margin:0 auto; background:#0c2d4a; border:1px solid rgba(255,255,255,0.1); border-radius:12px 12px 0 0; overflow:hidden; box-shadow:0 40px 80px rgba(0,0,0,0.5); }
+.browser-bar { background:#07223c; padding:12px 16px; display:flex; align-items:center; gap:8px; }
+.browser-dots { display:flex; gap:5px; }
+.browser-dots span { width:9px; height:9px; border-radius:50%; }
+.browser-dots .r { background:#ff5f57; } .browser-dots .y { background:#febc2e; } .browser-dots .g { background:#28c840; }
+.browser-url { flex:1; background:rgba(255,255,255,0.05); border-radius:5px; padding:5px 12px; font-size:11px; color:#4b6a88; text-align:center; }
+.browser-content { aspect-ratio:16/9; background:linear-gradient(135deg, #07223c 0%, #0c2d4a 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.browser-content img { width:100%; height:100%; object-fit:cover; }
+/* Fake map content if no image */
+.fake-map { width:100%; height:100%; position:relative; background:#0a1628; }
+.fake-map::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size:40px 40px; }
+.map-pin { position:absolute; width:10px; height:10px; border-radius:50%; border:2px solid rgba(255,255,255,0.4); }
+
+/* ── Metrics ─────────────────── */
+.metrics { display:flex; justify-content:center; gap:64px; padding:56px 48px; flex-wrap:wrap; }
+.metric { text-align:center; }
+.metric strong { display:block; font-size:32px; font-weight:800; letter-spacing:-0.5px; }
+.metric span { font-size:13px; color:#64748b; margin-top:4px; display:block; }
+
+/* ── Section ─────────────────── */
+.section { padding:96px 48px; max-width:1100px; margin:0 auto; }
+.section-dark { background:#07223c; color:#f1f5f9; padding:96px 48px; }
+.section-dark .section-inner { max-width:1100px; margin:0 auto; }
+.section-dark h2 { color:#f1f5f9; }
+.section-dark p { color:#94a3b8; }
+.section-header { max-width:540px; margin-bottom:56px; }
+.section-header h2 { font-size:clamp(28px,3.5vw,40px); font-weight:800; letter-spacing:-1px; line-height:1.12; margin-bottom:12px; }
+.section-header p { font-size:15px; color:#64748b; line-height:1.6; }
+
+/* ── Feature cards ────────────── */
+.feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.feat-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:32px 28px; transition:transform 0.2s, box-shadow 0.2s; }
+.feat-card:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,0.06); }
+.feat-card h3 { font-size:15px; font-weight:700; margin-bottom:8px; }
+.feat-card p { font-size:13px; color:#64748b; line-height:1.65; }
+
+/* Dark variant cards */
+.feat-card-dark { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:32px 28px; transition:transform 0.2s, border-color 0.2s; }
+.feat-card-dark:hover { transform:translateY(-2px); border-color:rgba(255,255,255,0.15); }
+.feat-card-dark h3 { font-size:15px; font-weight:700; margin-bottom:8px; color:#f1f5f9; }
+.feat-card-dark p { font-size:13px; color:#94a3b8; line-height:1.65; }
+
+/* ── Steps ────────────────────── */
+.steps-row { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+.step-item { position:relative; padding-left:20px; }
+.step-item::before { content:''; position:absolute; left:0; top:8px; width:8px; height:8px; border-radius:50%; background:#10b981; }
+.step-item h3 { font-size:14px; font-weight:700; margin-bottom:6px; }
+.step-item p { font-size:13px; color:#64748b; line-height:1.6; }
+
+/* ── Pricing ──────────────────── */
+.price-row { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.price-box { border:1px solid #e2e8f0; border-radius:12px; padding:36px 28px; transition:box-shadow 0.2s; }
+.price-box:hover { box-shadow:0 8px 24px rgba(0,0,0,0.06); }
+.price-box.pop { border:2px solid #0f172a; }
+.price-box.pop::before { content:'Mest populær'; position:absolute; top:-11px; left:24px; background:#0f172a; color:#fff; font-size:10px; font-weight:700; padding:3px 12px; border-radius:100px; }
+.price-box { position:relative; }
+.price-box h3 { font-size:15px; font-weight:700; margin-bottom:4px; }
+.price-box .amt { font-size:36px; font-weight:800; letter-spacing:-1px; margin-bottom:2px; }
+.price-box .amt span { font-size:13px; font-weight:400; color:#94a3b8; letter-spacing:0; }
+.price-box .desc { font-size:13px; color:#64748b; margin-bottom:20px; }
+.price-box ul { list-style:none; margin-bottom:24px; }
+.price-box ul li { font-size:13px; color:#475569; padding:5px 0; display:flex; align-items:center; gap:6px; }
+.price-box ul li::before { content:''; width:4px; height:4px; border-radius:50%; background:#10b981; flex-shrink:0; }
+.price-cta { display:block; text-align:center; padding:11px; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none; transition:all 0.15s; }
+.price-cta-dark { background:#0f172a; color:#fff; }
+.price-cta-dark:hover { background:#1e293b; }
+.price-cta-outline { border:1px solid #e2e8f0; color:#475569; }
+.price-cta-outline:hover { border-color:#cbd5e1; }
+
+/* ── CTA ──────────────────────── */
+.cta-block { background:#07223c; padding:80px 48px; text-align:center; }
+.cta-block h2 { font-size:clamp(24px,3vw,36px); font-weight:800; letter-spacing:-0.5px; margin-bottom:12px; color:#f1f5f9; }
+.cta-block p { color:#94a3b8; margin-bottom:28px; font-size:15px; }
+
+/* ── Footer ───────────────────── */
+footer { padding:32px 48px; display:flex; justify-content:space-between; align-items:center; font-size:12px; color:#94a3b8; flex-wrap:wrap; gap:12px; }
+footer a { color:#64748b; text-decoration:none; }
+
+/* ── Responsive ───────────────── */
+@media(max-width:768px) {
+  nav { padding:0 20px; }
+  .hero { padding:100px 20px 0; }
+  .section, .section-dark { padding:64px 20px; }
+  .feat-grid, .steps-row, .price-row { grid-template-columns:1fr; }
+  .metrics { gap:32px; padding:40px 20px; }
+  .cta-block { padding:60px 20px; }
+  footer { padding:24px 20px; flex-direction:column; text-align:center; }
+  .nav-right a:not(.nav-btn) { display:none; }
+  .browser-frame { border-radius:8px 8px 0 0; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo"><span class="logo-dot"></span> FeltKart</a>
+  <div class="nav-right">
+    <a href="#features">Funksjoner</a>
+    <a href="#pricing">Priser</a>
+    <a href="https://app.feltkart.no" class="nav-btn">Logg inn</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Verktøyet for salgsteam som jobber på dør.</h1>
+    <p>Kart, kundekort, oppfølging og provisjon i én app. Bygget for norske selgere.</p>
+    <div class="hero-actions">
+      <a href="/signup.html" class="btn-accent">Start gratis →</a>
+      <a href="#features" class="btn-ghost">Se funksjoner</a>
+    </div>
+
+    <!-- Browser mockup -->
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+        <div class="browser-url">app.feltkart.no</div>
+      </div>
+      <div class="browser-content">
+        <!-- Replace this with a real screenshot: <img src="screenshot.png" alt="FeltKart"> -->
+        <div class="fake-map">
+          <div class="map-pin" style="background:#10b981;top:30%;left:25%"></div>
+          <div class="map-pin" style="background:#10b981;top:45%;left:42%"></div>
+          <div class="map-pin" style="background:#3b82f6;top:35%;left:55%"></div>
+          <div class="map-pin" style="background:#ef4444;top:55%;left:30%"></div>
+          <div class="map-pin" style="background:#f59e0b;top:40%;left:70%"></div>
+          <div class="map-pin" style="background:#10b981;top:60%;left:60%"></div>
+          <div class="map-pin" style="background:#6b7280;top:25%;left:75%"></div>
+          <div class="map-pin" style="background:#3b82f6;top:65%;left:45%"></div>
+          <div class="map-pin" style="background:#10b981;top:50%;left:20%"></div>
+          <div class="map-pin" style="background:#ef4444;top:38%;left:35%"></div>
+          <div class="map-pin" style="background:#6b7280;top:70%;left:70%"></div>
+          <div class="map-pin" style="background:#f59e0b;top:28%;left:48%"></div>
+          <div class="map-pin" style="background:#10b981;top:55%;left:78%"></div>
+          <div class="map-pin" style="background:#3b82f6;top:42%;left:15%"></div>
+          <!-- Sidebar mock -->
+          <div style="position:absolute;top:0;right:0;bottom:0;width:220px;background:rgba(7,34,60,0.95);border-left:1px solid rgba(255,255,255,0.08);padding:20px;">
+            <div style="font-size:10px;color:#4b6a88;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Område</div>
+            <div style="font-size:13px;color:#f1f5f9;font-weight:600;margin-bottom:4px;">Storgata Øst</div>
+            <div style="font-size:11px;color:#4b6a88;margin-bottom:16px;">Henrik B. · 124 adresser</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#94a3b8">Ikke besøkt</span><span style="color:#f1f5f9">87</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#94a3b8">Salg</span><span style="color:#f1f5f9">21</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#94a3b8">Nei</span><span style="color:#f1f5f9">12</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#94a3b8">Tenker</span><span style="color:#f1f5f9">4</span></div>
+            </div>
+            <div style="margin-top:20px;background:#10b981;color:#fff;text-align:center;padding:8px;border-radius:6px;font-size:11px;font-weight:600;">Overfør adresser</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="metrics">
+  <div class="metric"><strong>100 000+</strong><span>Adresser per konto</span></div>
+  <div class="metric"><strong>< 2 min</strong><span>Fra Excel til kart</span></div>
+  <div class="metric"><strong>Sanntid</strong><span>Synkronisering</span></div>
+  <div class="metric"><strong>GPS</strong><span>Verifiserte besøk</span></div>
+</div>
+
+<!-- FEATURES (light) -->
+<section class="section" id="features">
+  <div class="section-header">
+    <h2>Alt du trenger. Ingenting overflødig.</h2>
+    <p>Erstatter Excel, Google Maps og WhatsApp-grupper med ett system.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card">
+      <h3>Interaktivt kart</h3>
+      <p>Last opp adresselister fra Excel. Alle adresser geokodes via Kartverket og plottes automatisk. Filtrer på status, selger og liste.</p>
+    </div>
+    <div class="feat-card">
+      <h3>Kundekort</h3>
+      <p>Kontaktinfo, besøkshistorikk med tidslinje, kommentarer og status samlet. Registrer besøk fra mobilen med ett trykk.</p>
+    </div>
+    <div class="feat-card">
+      <h3>Oppfølging</h3>
+      <p>Avtaler i kalendervisning med push-varsler. Selgeren blir minnet på hvert kundebesøk. Ingenting glipper.</p>
+    </div>
+    <div class="feat-card">
+      <h3>Provisjon</h3>
+      <p>Automatisk beregning per produkt med tiers. Admin ser lønnsomhet etter AGA og feriepenger.</p>
+    </div>
+    <div class="feat-card">
+      <h3>GPS-verifisering</h3>
+      <p>Se om besøket ble registrert på adressen eller fra annen lokasjon. Vis selgere live på admin-kartet.</p>
+    </div>
+    <div class="feat-card">
+      <h3>Statistikk</h3>
+      <p>Treffprosent, konvertering, toppliste og coaching-innsikt. Data for å lede teamet bedre.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW (dark) -->
+<section class="section-dark">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Fra Excel til salg på 5 minutter.</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-item" style="--c:#10b981">
+        <h3 style="color:#f1f5f9">Last opp adresser</h3>
+        <p style="color:#94a3b8">Dra inn en Excel-fil. FeltKart gjenkjenner kolonner og geokoder alle adresser automatisk.</p>
+      </div>
+      <div class="step-item">
+        <h3 style="color:#f1f5f9">Tildel selgere</h3>
+        <p style="color:#94a3b8">Tegn polygoner på kartet. Tildel én selger per område med ett klikk.</p>
+      </div>
+      <div class="step-item">
+        <h3 style="color:#f1f5f9">Selger går ut</h3>
+        <p style="color:#94a3b8">Åpne appen på mobil. Se adresser, registrer besøk, sett opp callbacks.</p>
+      </div>
+      <div class="step-item">
+        <h3 style="color:#f1f5f9">Følg opp</h3>
+        <p style="color:#94a3b8">Admin ser aktivitet i sanntid. Provisjon og statistikk oppdateres automatisk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MORE FEATURES (dark cards) -->
+<section class="section-dark" style="padding-top:0">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Tilpasset din bedrift.</h2>
+      <p style="color:#94a3b8">Egne statuser, prosjekter, produkter og arbeidsflyter.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card-dark">
+        <h3>Multi-tenant</h3>
+        <p>Hvert selskap er isolert. Egne brukere, produkter og innstillinger. Row Level Security.</p>
+      </div>
+      <div class="feat-card-dark">
+        <h3>Salgsmål</h3>
+        <p>Sett budsjett per liste i antall eller prosent. Følg progresjon visuelt mot målet.</p>
+      </div>
+      <div class="feat-card-dark">
+        <h3>Egne statuser og ikoner</h3>
+        <p>Definer statuser, velg farge og bokstaver for kartmarkørene. Tilpass til din arbeidsflyt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="section-header">
+    <h2>Enkel prising. Ingen overraskelser.</h2>
+    <p>Start med gratis prøveperiode. Ingen kort kreves.</p>
+  </div>
+  <div class="price-row">
+    <div class="price-box">
+      <h3>Starter</h3>
+      <div class="amt">499<span> kr/mnd</span></div>
+      <div class="desc">For små team som kommer i gang.</div>
+      <ul>
+        <li>Opptil 5 selgere</li>
+        <li>10 000 adresser</li>
+        <li>Kart, kundekort, provisjon</li>
+        <li>E-post support</li>
+      </ul>
+      <a href="/signup.html" class="price-cta price-cta-outline">Kom i gang</a>
+    </div>
+    <div class="price-box pop">
+      <h3>Pro</h3>
+      <div class="amt">1 499<span> kr/mnd</span></div>
+      <div class="desc">For etablerte salgsteam.</div>
+      <ul>
+        <li>Opptil 25 selgere</li>
+        <li>100 000 adresser</li>
+        <li>GPS-verifisering</li>
+        <li>Salgsmål og statistikk</li>
+        <li>Prosjekter og kategorier</li>
+        <li>Prioritert support</li>
+      </ul>
+      <a href="/signup.html" class="price-cta price-cta-dark">Start gratis prøveperiode</a>
+    </div>
+    <div class="price-box">
+      <h3>Enterprise</h3>
+      <div class="amt">Kontakt oss</div>
+      <div class="desc">For store organisasjoner.</div>
+      <ul>
+        <li>Ubegrenset selgere og adresser</li>
+        <li>Integrasjoner (CRM, Salesforce)</li>
+        <li>Dedikert onboarding</li>
+        <li>SLA-garanti</li>
+      </ul>
+      <a href="mailto:henrik@consal.no" class="price-cta price-cta-outline">Ta kontakt</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-block">
+  <h2>Klar til å komme i gang?</h2>
+  <p>Gratis prøveperiode. Oppsett på 5 minutter. Ingen kredittkort.</p>
+  <a href="/signup.html" class="btn-accent">Start nå →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="logo" style="font-size:13px;color:#64748b"><span class="logo-dot"></span> FeltKart</a>
+  <a href="mailto:henrik@consal.no">henrik@consal.no</a>
+  <span>© 2026 Børsan AS</span>
+</footer>
+
+</body>
+</html>

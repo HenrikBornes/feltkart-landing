@@ -1,0 +1,38 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/funksjoner", "destination": "/pages/funksjoner", "permanent": false },
+    { "source": "/hvordan", "destination": "/pages/hvordan", "permanent": false },
+    { "source": "/priser", "destination": "/pages/priser", "permanent": false },
+    { "source": "/kontakt", "destination": "/pages/kontakt", "permanent": false },
+    { "source": "/bestill", "destination": "/pages/bestill", "permanent": false },
+    { "source": "/support", "destination": "/pages/support", "permanent": false },
+    { "source": "/vilkar", "destination": "/pages/vilkar", "permanent": false },
+    { "source": "/personvern", "destination": "/pages/personvern", "permanent": false },
+    { "source": "/sikkerhet", "destination": "/pages/sikkerhet", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(self)" }
+      ]
+    },
+    {
+      "source": "/screenshots/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(css|js|jsx|svg|woff2)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="no" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hvordan det fungerer — FeltKart</title>
+<meta name="description" content="Fra signering til salg på under en time. Se hvordan FeltKart settes opp og kommer i drift." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../mockups.css" />
+<script>try { var t = localStorage.getItem('feltkart-landing-theme') || 'light'; document.documentElement.setAttribute('data-theme', t); } catch(e){}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a>
+    <nav class="nav-links">
+      <a href="funksjoner.html">Funksjoner</a>
+      <a href="hvordan.html" class="active">Hvordan det fungerer</a>
+      <a href="priser.html">Priser</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://app.feltkart.no" class="btn btn-ghost" style="padding:8px 14px; font-size:13px;">Logg inn</a>
+      <a href="kontakt.html" class="btn btn-primary" style="padding:8px 14px; font-size:13px;">Ta kontakt</a>
+    </div>
+  </div>
+</header>
+
+<section class="subpage-hero" data-screen-label="Hvordan">
+  <div class="container">
+    <div class="breadcrumbs"><a href="../index.html">Forside</a><span class="sep">/</span><span>Hvordan det fungerer</span></div>
+    <h1>Fra signering til salg på under en time</h1>
+    <p class="subpage-lede">Ingen langtidsimplementering. Du betaler, vi setter opp admin og onboarding, og teamet er ute samme dag.</p>
+  </div>
+</section>
+
+<section style="padding-top: 32px;">
+  <div class="container">
+    <div class="steps">
+      <div class="step">
+        <div class="step-marker">01</div>
+        <span class="step-number">Onboarding</span>
+        <h3>Velg pakke og betal</h3>
+        <p>Ta kontakt — vi setter opp tenant og fakturerer etablering (1 900 kr) + månedlig per bruker. Du får admin-tilgang og velkomstmail samme dag.</p>
+      </div>
+      <div class="step">
+        <div class="step-marker">02</div>
+        <span class="step-number">Oppsett</span>
+        <h3>Sett opp team og områder</h3>
+        <p>Inviter selgerne, last opp adresselister (CSV/Excel) og tegn opp territoriene på kartet. Vi har maler for de vanligste produktene.</p>
+      </div>
+      <div class="step">
+        <div class="step-marker">03</div>
+        <span class="step-number">I drift</span>
+        <h3>Følg salget i sanntid</h3>
+        <p>Selgerne banker dører, du ser KPI'ene rulle inn. Konkurranser, leaderboard, lønnsomhet og budsjett — alt på samme skjerm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="onboarding" data-screen-label="Onboarding" style="margin-top: 40px;">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Onboarding &amp; opplæring</span>
+      <h2>Egne opplæringsspor for admin og selger</h2>
+      <p>Korte, fokuserte videoer. Admin lærer å sette opp systemet — selgere lærer å selge med det.</p>
+    </div>
+    <div class="onb-shell">
+      <div class="onb-tabs">
+        <button class="onb-tab active" data-track="admin">For admin</button>
+        <button class="onb-tab" data-track="selger">For selger</button>
+      </div>
+      <div class="onb-content" id="onbContent"></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 80px 0;">
+  <div class="container" style="text-align:center;">
+    <h2>Klar for å sette i gang?</h2>
+    <p style="margin-top:14px; color:var(--text-secondary); font-size:17px;">Send oss en kort e-post — vi har dere i drift samme dag.</p>
+    <div class="hero-cta" style="justify-content:center; margin-top:28px;">
+      <a href="kontakt.html" class="btn btn-primary btn-lg">Ta kontakt →</a>
+      <a href="priser.html" class="btn btn-ghost btn-lg">Se priser</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="brand-col"><a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a><p>Norsk B2C-plattform for feltsalg. Bygd og hostet i Norge.</p></div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Produkt</h4><ul><li><a href="funksjoner.html">Funksjoner</a></li><li><a href="hvordan.html">Hvordan det fungerer</a></li><li><a href="priser.html">Priser</a></li><li><a href="https://app.feltkart.no">Logg inn</a></li></ul></div>
+        <div class="footer-col"><h4>Juridisk</h4><ul><li><a href="vilkar.html">Vilkår</a></li><li><a href="personvern.html">Personvern</a></li><li><a href="sikkerhet.html">Sikkerhet</a></li></ul></div>
+        <div class="footer-col"><h4>Hjelp</h4><ul><li><a href="support.html">Support</a></li><li><a href="kontakt.html">Kontakt</a></li><li><a href="mailto:post@feltkart.no">post@feltkart.no</a></li><li><a href="tel:+4795238689">+47 952 38 689</a></li></ul></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 FeltKart AS · Org.nr 933 973 719</span><span>post@feltkart.no · +47 952 38 689</span></div>
+  </div>
+</footer>
+
+<script>
+const tracks = {
+  admin: { title: 'Admin-spor · ca. 22 min', meta: '6 moduler · Sertifisering inkludert', items: [
+    { t: 'Sett opp tenant og merkevare', s: 'Logo, farger, valuta, AGA og pensjonssatser' },
+    { t: 'Importer adresser og bygg lister', s: 'CSV/Excel · automatisk geokoding · dubletthåndtering' },
+    { t: 'Tegn områder og tildel selgere', s: 'Polygontegning · automatisk fordeling · territorier' },
+    { t: 'Konfigurer produkter, CPO og budsjett', s: 'Lønnsomhetsberegning per produkt og leverandør' },
+    { t: 'Lag konkurranser og motivasjonstavle', s: 'Regler, premier, podium og live leaderboard' },
+    { t: 'Tolk dashboardet og rapporter', s: 'Hitrate, contactrate, profitt — bruk dem riktig' },
+  ]},
+  selger: { title: 'Selger-spor · ca. 9 min', meta: '4 moduler · Klar første dag', items: [
+    { t: 'Logg inn og finn ditt område', s: 'App på mobil · automatisk routing til kart' },
+    { t: 'Bank første dør — registrer status', s: 'Solgt, ikke hjemme, oppfølging — to taps' },
+    { t: 'Bruk fasadeleads og oppfølginger', s: 'Foto, geotag og påminnelser i kalenderen' },
+    { t: 'Følg konkurranser og se egne tall', s: 'Leaderboard, hitrate og lønnen i sanntid' },
+  ]},
+};
+function renderTrack(key) {
+  const t = tracks[key];
+  document.getElementById('onbContent').innerHTML = `
+    <div class="onb-video"><div class="play-button"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg></div><div class="video-meta"><span style="width:6px;height:6px;border-radius:99px;background:#ef4444;display:inline-block;"></span>Video kommer · ${t.meta}</div></div>
+    <div><h3 style="margin-bottom: 6px;">${t.title}</h3><p style="font-size: 14px; margin-bottom: 18px;">Steg-for-steg leksjoner du gjennomfører i eget tempo.</p>
+      <ul class="onb-list">${t.items.map((it, i) => `<li><span class="num">${String(i+1).padStart(2,'0')}</span><div class="body"><strong>${it.t}</strong><span>${it.s}</span></div></li>`).join('')}</ul></div>`;
+}
+renderTrack('admin');
+document.querySelectorAll('.onb-tab').forEach(tab => tab.addEventListener('click', () => {
+  document.querySelectorAll('.onb-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  renderTrack(tab.dataset.track);
+}));
+</script>
+
+</body>
+</html>

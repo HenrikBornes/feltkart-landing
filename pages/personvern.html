@@ -12,15 +12,19 @@
 <header class="site-header">
   <div class="container nav">
     <a href="../index.html" class="brand"><span class="wm"><span class="feld">Felt</span><span class="kart">Kart</span><span class="pin"></span></span></a>
-    <nav class="nav-links">
+    <nav id="primary-nav" class="nav-links">
       <a href="funksjoner.html">Funksjoner</a>
       <a href="hvordan.html">Hvordan det fungerer</a>
       <a href="priser.html">Priser</a>
       <a href="kontakt.html">Kontakt</a>
     </nav>
     <div class="nav-actions">
-      <a href="https://app.feltkart.no" class="btn btn-ghost" style="padding:8px 14px; font-size:13px;">Logg inn</a>
+      <a href="https://app.feltkart.no" class="btn btn-ghost nav-action-secondary" style="padding:8px 14px; font-size:13px;">Logg inn</a>
       <a href="kontakt.html" class="btn btn-primary" style="padding:8px 14px; font-size:13px;">Ta kontakt</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Meny">
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+      </button>
     </div>
   </div>
 </header>
@@ -171,6 +175,19 @@
     </div>
   </div>
 </footer>
+
+
+<script>
+(function(){
+  var btn=document.querySelector('.nav-toggle');
+  var links=document.getElementById('primary-nav');
+  if(!btn||!links)return;
+  btn.addEventListener('click',function(){
+    var open=links.classList.toggle('open');
+    btn.setAttribute('aria-expanded',open?'true':'false');
+  });
+})();
+</script>
 
 </body>
 </html>
